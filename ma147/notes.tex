@@ -1,0 +1,90 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\title{MA147}
+\author{Haria}
+\date{October 2025}
+
+\begin{document}
+
+\maketitle
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\section{Lecture 2 + 3}
+\subsection{Types of problem}
+There are 3 types of modelling problem
+\begin{enumerate}
+    \item Forward Problems : Make prediction based off of a model and its parameters
+    \item Inverse problems : Derive parameters based off of a model and data
+    \item Control Problem : Enforce behaviour on a model
+\end{enumerate}
+\subsection{Dimensional Analysis}
+\subsubsection{Variables}
+Before discussing any dimensions variables may have it is important to discuss the two kinds of variables. The first is the independent variables. These are things that exist independently or are parameters of our model. So time is a independent variable and an infection rate parameter is also independent.
+\\
+A dependant variable evolves on a function of the dependant variables. So the amount infected or position may both be dependant variables with respect to time. We can express this relation between dependant and independent variables as follows.
+\[\vec{d} = u(\vec{i}) , d \in \mathbb{R}^n,i \in \mathbb{R}^m,u:\mathbb{R}^n \to \mathbb{R}^m\]
+Here $n$ and $m$ are the number of dependant and independent variables respectively. Its important to note if $x$ is a variable its derivative is the same variable for the purposes of counting as the derivative is an  operator applied to it so to count this separately would be to count $x^2$ separately.
+\subsubsection{Introducing Dimensions}
+Dimensional analysis as a tool allows us to simplify models,check models and generalize. It is built on 2 key premises.
+\begin{enumerate}
+    \item All quantities have dimensions (this includes dimensionless)
+    \item Laws relating quantities do not depend on units
+\end{enumerate}
+Its work noting units are not dimensions. The relationship between these is shown below
+\begin{center}
+    \begin{tabular}{|c|c|c|}
+         \hline
+         Notation&Dimension&Unit  \\
+         \hline
+         L&length&metre,foot\\
+         T&time&seconds,hours\\
+         M&Mass&grams,kg\\
+         A&Amount&mol\\
+         $\Theta$&temp&K\\
+         Q&Charge&coulomb,e\\
+         \hline
+    \end{tabular}
+\end{center}
+\begin{definition}
+    Given a variable $v$ let $[v]$ denote the dimension of $v$    
+\end{definition}
+For example $[t] = T$.
+\subsubsection{Dimensional Manipulation}
+We have 4 rules for the dimensional manipulation of variables.
+\begin{enumerate}
+    \item $[v_1v_2] = [v_1][v_2]$
+    \item $v_1 + v_2$ iff $[v_1] = [v_2]$
+    \item $\left[\frac{dx}{dy}\right] = \left[\frac{x}{y}\right]$ We also get a converse rule for integration by the fundamental theorem of algebra.
+    \item An argument $x$ to a complex function such as $\sin$ or $e^x$ must satisfy $[x] = 1$.
+\end{enumerate}
+We can use dimensional analysis to reduce mathematical dependencies between variables. Suppose $d = u(i_1,i_2,\dots,i_n)$ we may take the following steps to rewrite $u$ to change its dependencies.
+\begin{enumerate}
+    \item Write the dimensions of all variables
+    \item Express fundamental dimensions in terms of these variables (these are scalings)
+    \item Create a dimensionless version of all quantities by dividing by scaling
+    \item Make a change of variables to make $d$ in terms of the new variables
+    \item Use the scaling to sub back in original values
+\end{enumerate}
+This is quite a lot to do so consider the basic model given by 
+\[\frac{dP}{dt} = \alpha P(t),t>0\]
+\[P(0) = p_0\]
+Then let 
+\[P = u(t,\alpha,p_0)\]
+Expressing $P$ in terms of its dependant variables. Now lets go through the steps
+\begin{enumerate}
+    \item $[P] = A,[t] = T,[p_0] = A,[\alpha] = T^{-1}$
+    \item $A = [p_0],T = [\alpha^{-1}]$ these are the only applicable dimensions to the question.
+    \item $\tilde{p} = \frac{P}{p_0},\tilde{t} = \alpha t, \tilde{\alpha} = \frac{\alpha}{\alpha},\tilde{p_0} = \frac{p_0}{p_0}$ its important to note that for all of these $[\tilde{p}] = 1$
+    \item Now we can re-express $d$ as a function of each these new variables. $\tilde{p} = \tilde{u}(\tilde{t},\tilde{\alpha},\tilde{p_0})$
+    \item And now subbing back we get $\frac{P}{p_0} = \tilde{u}(\alpha t,1,1)$ Eliminating constant dependencies and rearranging for $P$ gives $P = p_0\tilde{u}(\alpha t)$.
+\end{enumerate}
+This process reveals that $P$ only really depends on $\alpha t$ together and not separately then depends on $p_0$ only as a final scaling factor. This is represented in the solution to the differential equation of $P(t) = p_0e^{\alpha t}$
+\section{Lecture 4 - Buckingham $\Pi$}
+\begin{theorem}
+    Buckingham $\Pi$ theorem : In a problem 
+\end{theorem}
+    
+\end{document}

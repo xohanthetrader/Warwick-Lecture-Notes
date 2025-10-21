@@ -1,0 +1,242 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage[utf8]{inputenc}
+
+\usepackage{kpfonts}
+\usepackage{newunicodechar}
+
+\newunicodechar{¬}{\TextOrMath{\textlnot}{\lnot}}
+\title{ST120}
+\author{Haria}
+\date{October 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{Lectures 1 + 2}
+\subsection{Probability Spaces}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{example}{Example}
+Consider a simple probability problem. I have a bag with 20 balls of three different colours 4 red balls 6 blue balls and 10 green balls. A simple question to be asked is what is $\mathbb{P}(\text{red})$. From intuition you know this number is $\frac{4}{20}$ but it is important to formalise what's going on.
+\subsubsection{Sample Space}
+We can say that red green and blue are three $\textbf{outcomes}$ that can occur. It can be useful to collect these three events together into a set as such $\{\text{red},\text{blue},\text{green}\}$.
+\begin{definition}
+    Let $\Omega$ denote the Sample Space, The set of all outcomes.
+\end{definition}
+\subsubsection{Event Space}
+Sometimes we want to discuss what we call and even instead of a specific outcome. Sometimes we may want to ask what is $\mathbb{P}(¬ \text{red})$ we can associate ¬red with the set $\{ \text{blue}, \text{green}\}$. We call such a thing event and events are sets of outcomes and as such every event is a subset of the Sample Space
+\begin{definition}
+    Let $\mathcal{F}$ denote the Event Space. The Set of all events. $\mathcal{F} \subseteq \mathcal{P}(\Omega)$
+\end{definition}
+\subsubsection{Probability Map}
+The last thing we want to do is be bale to go from an event to the actual probability.
+\begin{definition}
+    Let $\mathbb{P}$ denote the probability map. It is a function $\mathcal{F} \to [0,1]$ associating an event with a probability
+\end{definition}
+Such a map should fulfil some list of properties as follows
+\begin{itemize}
+    \item $\mathbb{P}({\emptyset}) = 0$
+    \item $\mathbb{P}(\Omega) = 1$
+    \item For any events $A,B \in \mathcal{F}$ where $A \cap B = \emptyset $ then $\mathbb{P}(A) + \mathbb{P}(B) = \mathbb{P}(A \cup B)$
+\end{itemize}
+
+
+
+\begin{definition}
+    A Probability Space is the triple $(\Omega,\mathcal{F},\mathbb{P})$
+\end{definition}
+\subsection{Uniform Probability Spaces}
+\begin{definition}
+    A uniform probability space is a triple $(\Omega,\mathcal{F},\mathbb{P})$  satisfying the normal properties aswell as a uniformity where for any $\omega,\omega' \in \Omega$ we have $\mathbb{P}(\omega) = \mathbb{P}(\omega')$
+\end{definition}
+As such we conject that $\mathbb{P}(A) \propto |A|$
+\begin{proposition}
+    Let $(\Omega,\mathcal{F},\mathbb{P})$ denote a UPS then for all $\omega \in \Omega$ $\mathbb{P}(\{\omega\}) = \frac{1}{|\Omega|}$ 
+\end{proposition}
+\begin{proof}
+    Since for all $\omega,\omega' \in \Omega$ we have $\mathbb{P}(\omega) = \mathbb{P}(\omega')$  let $p = \mathbb{P}(\omega)$
+    \[1 = \mathbb{P}(\Omega) = \sum_{\omega \in \Omega}\mathbb{P}(\omega)\ = \sum_{\omega \in \Omega}p = p|\Omega|\]
+    \[p = \frac{1}{|\Omega|}\]
+\end{proof}
+\begin{proposition}
+    Let $(\Omega,\mathcal{F},\mathbb{P})$ denote a UPS then for all $A \in \mathcal{F}$ $\mathbb{P}(A) = \frac{|A|}{|\Omega|}$ 
+\end{proposition}
+\begin{proof}
+    \[\mathbb{P}(A) =  \sum_{\omega \in A}\mathbb{P}(\omega) = p|A| = \frac{|A|}{|\Omega|}\]
+\end{proof}
+\subsection{Basics of Combinatorics}
+Here we shall present the Fundamental rules of counting
+\begin{itemize}
+    \item Correspondence Rule : If $A$ and $B$ are in 1 - 1 correspondence then $|A| = |B|$
+    \item Addition Rule : if $A_{1},A_{2},\dots,A_{n}$ are pairwise disjoint then
+          \[\left|\bigcup_{i=1}^{n}A_{i} \right| = \sum_{i=1}^{n}|A_{i}|\]
+        \item Fundamental Counting Principle : Suppose a finite set $E$ can have its elements determined in $k$ successive steps with $n_{i}$ possibilities for each step $1,\dots,k$ and different choices lead to different elements then $|E| = \prod_{i = 1}^k n_{i}$  
+\end{itemize}
+
+\section{Lecture 3 - Birthdays Problems}
+We have started to build up a theory for how to calculate probabilities. Now we will try to apply these and also see whatever definitions are needed to fill in the gaps
+\subsection{Tuples and Orderings}
+\subsubsection{Tuples}
+The first problem we will attempt to solve is "What is the probability, given a room of 30 people, that at least two of them share a birthday/ The first thing we will want to identify is what is the sample space. The sample space intuitively should be the space of all configurations of birthdays the group can have. Naturally this forms a uniform probability space as each outcome is equally likely. We also have to consider how to mathematically represent these outcomes so that we can find the size of the entire sample space. The way we shall represent these are as 30-tuples $(b_{1},b_{2},\dots,b_{30})$ where $b_{i}$ is the $i$th persons birthday.
+
+Now lets discuss what a tuple is
+\begin{definition}
+    Given a set $A$ such that $|A| = n \in \mathbb{N}$. A sequence of length $k \in \mathbb{N}$ of elements of $A$ is an ordered $k$-tuple $(a_1,\dots a_k)$ such that $a_i \in A$ where $i \in \{1,\dots,k\}$   
+    We denote these sequences $S_{n,k}(A)$
+\end{definition}
+Now we need to be able to compute the cardinality of sets of sequences
+\begin{proposition}
+    For a set $A$ where $|A| = n \in \mathbb{N}$
+    \[|S_{n,k}(A)| = n^k\]
+\end{proposition}
+\begin{proof}
+    To construct an arbitrary element of $S_{n,k}(A)$ we first choose $a_1$ for which we have $n$ options then we choose $a_2$ for which we have $n$ options and so on up till $n_k$ where we have $n$ options. As each option provides a different element in the final set we can use the fundamental principal of counting to compute the size. 
+    \[|S_{n,k}(A)| = \underbrace{n\times n \times \dots \times n}_{k \text{ times}} = n^k\]
+\end{proof}
+Using this result we can find the size of the sample space in the birthdays problem as $|\Omega| = 365 ^ {30}$ 
+\subsubsection{Orderings}
+Next we wish to compute the cardinality of the event "\textit{At least two people share a birthday}". Much easier than computing this is to compute the complementary event "\textit{No two people share a birthday}". this means that each tuple in this event has no repeated elements. this is what we call and ordering.
+\begin{definition}
+    Given a set $A$ such that $|A| = n \in \mathbb{N}$ and a $k \le n$ we can say and ordering of length $k$ of elements of $A$ is a sequence of length $k$ of a with no repetition. We denote these $O_{n,k}(A)$
+    \[O_{n,k}(A) = (a_1,\dots,a_k) : a_i \in A,\forall_{i,j}\text{ }a_i \ne a_j\]
+\end{definition}
+Now we would also like to be able to compute the sizes of sets of orderings.
+\begin{proposition}
+    Given a set $A$ such that $|A| = n \in \mathbb{N}$ and a k such that $k \le n$
+    \[|O_{n,k}(A)| = \frac{n!}{(n-k)!}\]
+\end{proposition}
+\begin{proof}
+    We can determine elements of $O_{n,k}$ elements by element. To determine $a_1$ we have $n$ choices. For the $a_2$ we have $n-1$ choices as we cant repeat the first element. For $a_k$ we have $n - (k+1)$ choices. As each series of choices leads to a different element we can apply the fundamental principle of counting.
+    \[|O_{n,k}(A)| =n \times (n-1) \times \cdots \times (n - k +1)_= \frac{n!}{(n-k)!}\]
+\end{proof}
+So if we let $B$ denote the event no one shares a birthday then 
+$B = O_{365,30}(\text{365 days})$ so $|B| = 365 \times \cdots \times (365 - 30 + 1)$ so 
+\[\mathbb{P}(B) = \frac{|B|}{|\Omega|} \approx 0.29\]
+So we then have for our original event that at least 2 people share a probability of about 0.71.
+\subsection{Another Example}
+Now lets consider a similar problem of there being \textbf{exactly} 2 people sharing a birthday. We can characterize each outcome in our desired event by three characteristics
+\begin{enumerate}
+    \item The two people who share a birthday
+    \item The day that they share
+    \item The days everyone else has
+\end{enumerate}
+Now to compute the size of the event by the fundamental principle of counting we need to compute the number of choices for each piece of information.
+\begin{enumerate}
+    \item An intuitive guess for the first one is $|O_{30,2}|$ but this cares about the order that the two people share a birthday are picked in which doesn't really matter so we can divide this by the ways to order the two yielding us \[\frac{|O_{30,2}|}{|O_{2,2}|} = \frac{30!}{28!2!}\]
+    \item There are 365 possibilities for this day
+    \item For the remaining 28 people by the Fundamental Counting Principle we have $364 \times \cdots \times(365-28)$ 
+\end{enumerate}
+Now via computation and the same sample space as before we get the probability is roughly 0.28
+\subsection{Combinations}
+\begin{definition}
+    Let $A$ be a set such that $|A| = n  \in \mathbb{N}$. We can say that a combination of $k$ elements of $A$ is a subset of $A$ with $k$ elements. Let the set of combinations be denoted $C_{n,k}(A)$
+\end{definition}
+\begin{proposition}
+    Let $A$ be a set such that $|A| = n  \in \mathbb{N}$ and $k \le n$
+    \[|C_{n,k}(A)| = {{n}\choose{k}}\]
+\end{proposition}
+\begin{proof}
+    On ordering of length $k$ can be obtained uniquely in the following steps.
+    \begin{enumerate}
+        \item Choose from $C_{n,k}(A)$. This gives $|C_{n,k}(A)|$ choices 
+        \item Choose a permutation of these. $k!$ choices.
+    \end{enumerate}
+    By the FPC we get 
+    \[|O_{n,k}(A)| = k!|C_{n,k}(A)|\]
+    By rearranging we can get
+    \[|C_{n,k}(A)| = \frac{n!}{(n-k)!k!} = {n\choose{k}}\]
+\end{proof}
+
+As an exemplar problem we can consider all the ways that, having rolled 8 fair dice, our outcome has three twos, three fours and two fives. We can note that each of our valid outcomes is uniquely characterised by what dice gives us the twos and fours. Initially we have $8\choose{3}$ positions for the twos then $5\choose{3}$ for the fours and the fives must go where is left. By the FPC this event has size being the product of these two numbers 
+\section{Lecture 4 - Partitions}
+\begin{definition}
+    Let $A$ be a set such that $|A| = n\in \mathbb{N}$ and let $r \le n$. \\
+    An ordered parttion of $A$ into $r$ ordered subsets of cardinalt $k_1,\dots , k_r$ is a sequence of $(A_1,\dots,A_r)$ such that $|A_i| = k_i$, all the elements are pairwise disjoint and $\bigcup_{i=1}^rA_i = A$
+\end{definition}
+\begin{proposition}
+    LEt $A$ be a set such that $|A| = n \in \mathbb{N}$ and $r \le n$. The number of partitions of $A$ into $r$ subsets of cardinality $k_1,\dots,k_r$ is \[\frac{n!}{k_1!\times\cdots k_r!}\]
+\end{proposition}
+\begin{proof}
+    We can determine a partition as follows \\
+    Choose elements as follows
+    \begin{align*}
+        A_1 \subseteq A \text{ such that} |A_1| = k_1 &\text{ gives } {n\choose{k_1}} \\
+        A_1 \subseteq A \text{\textbackslash} A_1 \text{ such that} |A_1| = k_1 &\text{ gives } {{n - k_1}\choose{k_2}} \\
+        \cdots &\\
+        A_1 \subseteq A \text{\textbackslash} \bigcup_{i = 1}^{r-1}A_i \text{ such that} |A_1| = k_1 &\text{ gives } {{n - \sum_{i = 1}^{r-1}k}\choose{k_r}} \\
+    \end{align*}
+    By application of the fundamental priniple of counting and some carful counting we get the amount of partitions is \[\frac{n!}{k_1!\times\cdots k_r!}\]
+\end{proof}
+\subsection{Samplings}
+Sampling is how we produce realisations of random variables.
+\subsubsection{Example 1}
+Imagine a population of size $n \in \mathbb{N}$ and there are $n_1$ type 1 individuals and $n_2$ type two individuals.\\
+Suppose we draw a sample of size $k \le n$ from the population without replacement. The probability of a sample containing $k_1$ type one individuals and $k_2 = k - k_1$ of type 2 is 
+\[\]
+\section{Lectrue 5 - General Probability Spaces}
+We have spent a while specifically discussing uniform probability spaces. There are some more gnerealisations we may want to make to how our space works
+\begin{itemize}
+    \item Let $\Omega$ be an arbitrary set
+    \item Allow $\mathcal{F}$ to reflect partial knowledge
+    \item Following from the previous point we want to appreciate that $\mathcal{F} = \mathcal{P}(\Omega)$ is not always feasible.
+    \item Finally we want to define porperties of $\mathbb{P}$ on general $\mathcal{F}$
+\end{itemize}
+\subsection{Sample and Event Spaces}
+\begin{definition}
+    $\Omega$ is the set of all possible outcomes for a propabalistic process.
+\end{definition}
+In this course three cases are covered
+\begin{itemize}
+    \item $|\Omega| = n \in \mathbb{N}$
+    \item $|\Omega| = |\mathbb{N}|$
+    \item $|\Omega| = |\mathbb{R}|$
+    \begin{definition}
+        $\mathcal{F}$ is the event space and contains collections of outcomes for which you can make a judgement on wether the event happened or not
+    \end{definition}
+\end{itemize}
+\begin{example}
+    Imagine roilling a dice $\Omega = \{1,2,3,4,5,6\}$. The only information you are told is whether or not the outcome is odd or even. As this is the only information you are given you cannot diffrentiate the events $\{2\}$ and $\{4\}$. As such they cannot be in the event space. Here $\mathcal{F} = \{\emptyset,\{1,3,5\},\{2,4,6\}\}$.
+\end{example}
+Now lets present a more formal definition of the event space
+\begin{definition}
+    Let $\Omega$ be a sample scpae and $\mathcal{F} \subseteq \mathcal{P}(\Omega)$ \\
+    We can say $\mathcal{F}$ is an event space iff
+    \begin{enumerate}
+        \item $\Omega \in \mathcal{F}$ , $\emptyset \in \mathcal{F}$
+        \item If $A \subseteq \Omega$ and $A \in \mathcal{F}$ then $A^C \in \mathcal{F}$ (closure under complements)
+        \item Given a set $A = \{A_n \in \mathcal{F}| n \in \mathbb{N}\}$ then $\bigcup_{n=1}^{\infty}A_n \in \mathcal{F}$ (closure ubder coubntable union)
+    \end{enumerate}
+\end{definition}
+\begin{proposition}
+    $\Omega \ne \emptyset$ and $\mathcal{F} \in \mathcal{P}(\Omega)$ then $\mathcal{F}$ is an event space
+\end{proposition}
+\begin{proof}
+    \begin{enumerate}
+        \item $\Omega \in \Omega \Rightarrow\Omega \in P(\Omega) = \mathcal{F}$
+        \item $A \subseteq \Omega,A \in \mathcal{F}$ then $A^C = \Omega\text{\textbackslash}A \subseteq \Omega \Rightarrow A^C \in \mathcal{P}(\Omega) = \mathcal{F}$
+        \item Consider $A = \{A_n \in \mathcal{F}| n \in \mathbb{N}\}$
+        \[\bigcup_{A_n \in A}A_n \subseteq \bigcup_{A_n \in A}\Omega = \Omega \in \mathcal{P}(\Omega) = \mathcal{F} \]
+    \end{enumerate}
+\end{proof}
+We can now also look at some derived properties of the event space inhering from these defined properites
+\begin{proposition}
+    LEt $\mathcal{F}$ be an event space then
+    \begin{enumerate}
+        \item $\mathcal{F})$ is closed under finite union
+        \item $\mathcal{F})$ is closed under finite intersection
+        \item $\mathcal{F})$ is closed under countable intersection
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    \begin{enumerate}
+        \item Let $A_1,\dots,A_n \in \mathcal{F}$. Set $A_j = \emptyset,j > n$. therefor For all $i \in \mathbb{N^+},A_i \in \mathcal{F}$
+        \[\bigcup_{j=1}^nA_j = \bigcup_{j=1}^\infty A_j \in \mathcal{F}\]
+        \item 
+    \end{enumerate}
+\end{proof}
+\end{document}
