@@ -213,7 +213,7 @@ Now lets present a more formal definition of the event space
     \end{enumerate}
 \end{definition}
 \begin{proposition}
-    $\Omega \ne \emptyset$ and $\mathcal{F} \in \mathcal{P}(\Omega)$ then $\mathcal{F}$ is an event space
+    $\Omega \ne \emptyset$ and $\mathcal{F} = \mathcal{P}(\Omega)$ then $\mathcal{F}$ is an event space
 \end{proposition}
 \begin{proof}
     \begin{enumerate}
@@ -236,7 +236,57 @@ We can now also look at some derived properties of the event space inhering from
     \begin{enumerate}
         \item Let $A_1,\dots,A_n \in \mathcal{F}$. Set $A_j = \emptyset,j > n$. therefor For all $i \in \mathbb{N^+},A_i \in \mathcal{F}$
         \[\bigcup_{j=1}^nA_j = \bigcup_{j=1}^\infty A_j \in \mathcal{F}\]
-        \item 
+        \item LEt $A_1, \dots , A_n \in \mathcal{F}$. By demorgans law we may state 
+        \[\bigcap_{j=1}^n A_j = \left(\bigcup_{j=1}^n A^C\right)^C\]
+        By the closure of $\mathcal{F}$ under complements and under finite union we can say this finite intersection is in $\mathcal{F}$
+        \item For the infinite case we apply the same argument we just used only swapping finite for infinite 
     \end{enumerate}
 \end{proof}
+\section{Lecture 6 - Probability measure}
+\subsection{Probability measure}
+\begin{definition}
+    Given samples and event spaces $\Omega,\mathcal{F}$ a function $\mathbb{P} : \mathcal{F} \to \mathbb{R}$ is a probability measure if
+    \begin{enumerate}
+        \item For all $x \in \mathcal{F},\mathbb{P}(x) \in [0,1]$
+        \item $\mathbb{P}(\Omega) = 1$
+        \item For all $m,n$ such that $m \ne n,A_n \cap A_m = \emptyset$ then
+        \[\mathbb{P}\left(\bigcup_{j=1}^\infty A_j\right) = \sum_{j=1}^\infty \mathbb{P}(A_j)\] 
+    \end{enumerate}
+\end{definition}
+\begin{proposition}
+    Let $(\Omega,\mathcal{F},\mathbb{P})$ be a probability space. We can make then the following propoistions about $\mathbb{P}$
+    \begin{enumerate}
+        \item $\mathbb{P}(\emptyset) = 0$
+        \item if $A,B \in \mathcal{F}$ and $A \subseteq B$ then $\mathbb{P}(B - A) = \mathbb{P}(B) - \mathbb{P}(A)$
+        \item For all $A \in \mathcal{F},\mathbb{P}(A^C) = 1 - \mathbb{P}(A)$
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    \begin{enumerate}
+        \item For all $n \ge 1$ let $A_n = \emptyset$. Therefore we can state $\bigcup_{n=1}^\infty A_n = \emptyset$
+        \[\mathbb{P}(\emptyset) = \mathbb{P}\left(\bigcup_{n=1}^\infty A_n\right) = \sum_{n=1}^{\infty}\mathbb{P}A_n = \sum_{n=1}^{\infty}\mathbb{P}(\emptyset)\]
+        This only holds if $\mathbb{P}(\emptyset) = 0$
+        \item Using the same way we proved closure of finite unions in the event space we may prove a finite additivity for disjpin sets. This fact will be assumed here.
+        Let $B = (B - A) \cup B$. By the definition of set difference we know that $(B - A) \cap A = \emptyset$. This allows us to apply finite additivity
+        \[\mathbb{P}(B) = \mathbb{P}(B - A) + \mathbb{P}(A)\]
+        \item $\mathbb{P}(A^C) = \mathbb{P}(\Omega - A) = \mathbb{P}(\Omega) - \mathbb{P}(A) = 1 - \mathbb{P}(A)$
+    \end{enumerate}
+\end{proof}
+\subsection{Principle of inclusion Exclusion}
+\begin{proposition}
+    The Principle of Inclusion Exclusion is as follows. Let $(\Omega,\mathcal{F},\mathbb{P})$ be a probability space. Then for $A_1,\dots,A_n \in \mathcal{F}$
+    \[\mathbb{P}\left(\bigcup_{k=1}^n A_k \right) = \sum_{k=1}^{n}\left((-1)^{k+1}\sum_{2 \le i_1 < \dots < i_k \le n }\mathbb{P}(A_{i_1} \cap \dots \cap a_{i_k})\right)\] 
+\end{proposition}
+\begin{proof}
+    A proof sketchfor $n = 2$ is given here
+    \[A \cup B = (A - A \cap B) \cup (A \cap B) \cup (B - A \cup B)\]
+    By application of finite additivity PIE for $n = 2$ may be gotten. 
+\end{proof}
+\begin{proposition}
+    If $(\Omega,\mathcal{F},\mathbb{P})$ is a propbabilty space then if $A,B \in \mathcal{F}$ and $A \subseteq B$ Then $\mathbb{P}(A) \le \mathbb{P}(B)$
+\end{proposition}
+\begin{proposition}
+    Booles inequality : If $(\Omega,\mathcal{F},\mathbb{P})$ is a propbabilty space then for a list $A_1,\dots,A_n \in \mathcal{F}$ then
+    \[\mathbb{P}\left(\bigcup_{k=1}^n A_n\right) \le \sum_{k=1}^{n}(\mathbb{A_n})\] 
+\end{proposition}
 \end{document}
