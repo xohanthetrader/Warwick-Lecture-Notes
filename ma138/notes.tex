@@ -13,6 +13,8 @@
 
 \section{Lecture 1 - Sets}
 \newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem*{theorem}{Theorem}
 \newtheorem{example}{Example}
 \subsection{What are Sets}
 \begin{definition}
@@ -168,4 +170,140 @@ This is however not possible between $\mathbb{R}$ and $\mathbb{N}$. It can be sh
     \end{align*}
     Now we con construct a new number $x$. We make x by making the $n$th digit of $x$ the opposite of the $n$th digit of $f(n)$. Now the question is : is $x$ on our list. If $x$ is in the image of $f$ then there is some $k$ such that $f(k) = x$ but this means that $x$ will differ from $f(k)$ in the $k$th digit so $x$ cannot be $f(k)$ so $x$ cannot be in the image so $f$ cannot be a surjection
 \end{proof}
+We can also very similarly consider cantor theorem
+\begin{proposition}
+    There is no surjection $X \to \mathcal{P}(X)$
+\end{proposition}
+\begin{proof}
+    By contradiction assume there is a function $f : X \to \mathcal{P}(X)$ such that $f$ is a surjection.  The means for an $A \in \mathcal{P}(X)$ we know there is an $a \in X$ so that $f(a) = A$ We can define a set $C \subseteq X$ as follows
+    \[C = \{x \in X | x \notin f(x)\} \in \mathcal{P}(X)\]
+    As $f$ is a surjection there exists a $d$ such that $f(d) = C$. We can consider two cases.
+    \begin{enumerate}
+        \item Consider $d \in C$. this gives that $d \in f(d)$ so by defninition $d \notin f(d)$ leading to a contraditcion
+        \item Consider $d \notin C$ this gives that $d \notin f(d)$ so by definition $d \in C$ leading to a contradiciotn
+    \end{enumerate}
+    Both paths lead to a contradition so we can assume our premise was wrong meaning that there is no such surjection.
+\end{proof}
+This is somewhat related to how russels pradox works.
+\section{Lecture 4 + 5 + 6- More sets}
+\subsection{Products}
+\begin{definition}
+    Given $x \in X,y \in Y$ We can construct an ordered pair $(x,y)$. We may say for two pairs $(x,y) = (x',y')$ if and only if $x=x',y=y'$
+\end{definition}
+\begin{definition}
+    The cartesian product $X \times Y$ is the set of all pairs $(x,y)$ such that $X \in X,y \in Y$
+    \[X \times Y = \{(x,y) | x \in X,y \in Y\}\]
+\end{definition}
+We can from here get a few algebraic properties of the cartesian product. 
+\begin{proposition}
+    $X \times \emptyset = \emptyset$
+\end{proposition}
+\begin{proof}
+    Suppose by contradiction $X \times \emptyset \ne \emptyset$. this means there is a pair $(a,b) \in X \times \emptyset$ this means there is a $b \in \emptyset$ which is false yeilding a contradiction.
+\end{proof}
+We also know that $|[[m]] \times [[n]]| = mn$ and that $X \times Y$ does not generally equal $Y \times X$.
+\begin{definition}
+    $X^2 = X \times X$
+\end{definition}
+\subsection{Relations}
+\begin{definition}
+    A relation $R$ from $X \to Y$ consists of three parts 
+    \begin{enumerate}
+        \item A set $X$ as the domain
+        \item A set $Y$ as the codomain
+        \item A set $R \subseteq X \times Y$
+    \end{enumerate}
+\end{definition}
+You may write $xRy$ to say that $x$ is related to $y$ is $(x,y) \in R$
+\begin{definition}
+    A relation $R$ from $X \to Y$ may be called graphical if the every $x \in X$ there is only one pair $(x,y) \in R$
+\end{definition}
+\subsubsection{Functions}
+\begin{definition}
+    A function $f:X \to Y$ is a graphical relation $F$ from $X \to Y$ such that
+    \[f(x) = y \Leftrightarrow (x,y) \in F\]
+\end{definition}
+\begin{example}
+    \begin{enumerate}
+        \item $\{(0,1),(1,2),(2,3)\} \subseteq [[3]] \times [[5]]$ is a graphical relation and associates to $f(x) = x+1$
+        \item $\{(0,0),(0,1)\} \subseteq [[1]] \times [[2]]$ is not graphical as there is more than one pair for zero
+    \end{enumerate}
+\end{example}
+\begin{definition}
+    A function $f$ with graphical relation $F$ can be called injective if for every $y \in Y$ there is at nmost one $(x,y) \in F$
+\end{definition}
+\subsection{Unions}
+\begin{definition}
+    Given two sets $X,Y$ we can define their union as the set
+    \[\{z|z \in X \text{ or } z \in Y\}\]
+    And given a set of sets $\mathbb{X}$
+    \[\bigcup_{X \in \mathbb{X}} X = \{x|x \in X \text{ for some }X \in \mathbb{X} \}\]
+\end{definition}
+For example let $\mathbb{X} = \{[[n]]|n \in \mathbb{N}\}$ then $\bigcup_{X \in \mathbb{X}} X = \mathbb{N}$ 
+\subsection{Intersections}
+\begin{definition}
+    The intersection of two sets $X,Y$ is 
+    \[X \cap Y = \{z|z \in X \text{ and }z \in Y \}\]
+    Let $\mathbb{X}$ be a set of sets 
+    \[\bigcap_{x \in \mathbb{X}}X = \{z|z \in X \text{ for all } X \in \mathbb{X}\}\]
+\end{definition}
+For example let $\mathbb{X} = \{[[n]] | n \in \mathbb{N}\}$ then $\bigcap_{X \in \mathbb{X}}X = \emptyset$
+\subsection{Set difference}
+\begin{definition}
+    The set difference of $X,Y$ is
+    \[X - Y = \{x \in X| x \notin Y\}\]    
+\end{definition}
+For example $\mathbb{Z} - \mathbb{N} = \mathbb{Z}_{>0}$
+\subsection{Alegebra of Sets}
+\subsubsection{Difference}
+The following identities hold for the set difference
+\begin{itemize}
+    \item $X - \emptyset = X$
+    \item $\emptyset - X = \emptyset$
+    \item $X - X = \emptyset$
+\end{itemize}
+\subsubsection{Union}
+The union is associative and commutative. The following identities also hold
+\begin{itemize}
+    \item $X \subseteq X \cup Y$
+    \item $X \cup \emptyset = X$
+\end{itemize} 
+\subsubsection{Intersection}
+The intersection is also associative and commutative. The following idnetities also hold
+\begin{itemize}
+    \item $X \cap Y \subseteq X$
+    \item $X \cap \emptyset = \emptyset$
+\end{itemize}
+\subsubsection{Misc}
+Both the intersection and the union can distrobute over each other. The following identity also holds.
+\[X - (Y \cup Z) = (X - Y) \cap (X - Z)\]
+The identity also holds if you reverse the unions and intersections
+\section{Lecture 6 - Composition}
+\begin{definition}
+    Suppose $f:X \to Y$ and $g:Y \to Z$ are both functions then we can compose these to get the new function $(g \circ f) : X \to Z$ where $(g \circ f)(x) = g(f(x))$
+\end{definition} 
+The associated graphical realtionship is as follows 
+\[\{(x,g(f(x)))|x \in X \} \subseteq X \times Z\]
+\begin{theorem}
+    $(f \circ g) \circ h = f \circ (g \circ h)$
+\end{theorem}
+\begin{definition}
+    Given an $f:X \to Y$ we can say a function $g:Y \to X$ is a 
+    \begin{itemize}
+        \item left inverse of f if $(g \circ f) = id_X$
+        \item right inverse of f if $(f \circ g) = id_Y$
+    \end{itemize}
+\end{definition}
+\begin{theorem}
+    Given $f:X \to Y$ we can say
+    \begin{itemize}
+        \item If f has a left inverse it is injective
+        \item If f has a right inverse it is surjective
+    \end{itemize}
+\end{theorem}
+\section{Lecture 7 - Relations}
+\subsection{Functions on Functions}
+\begin{definition}
+    Given a function $f : X \to Y$ we say show the inmage of $f$ as 
+\end{definition}
 \end{document}
