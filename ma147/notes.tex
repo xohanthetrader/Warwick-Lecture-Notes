@@ -11,7 +11,9 @@
 
 \maketitle
 \newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
 \newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
 \section{Lecture 2 + 3}
 \subsection{Types of problem}
 There are 3 types of modelling problem
@@ -86,5 +88,163 @@ This process reveals that $P$ only really depends on $\alpha t$ together and not
 \begin{theorem}
     Buckingham $\Pi$ theorem : In a problem 
 \end{theorem}
-    
+\section{Lecture 10}
+\subsection{Autonomous Equations}
+\[\frac{dx}{dt} = f(x(t)) , t \in (\alpha,\beta)\]
+\[x(t_0) = x_0\]
+For many functions $f$ it can be hard to solve the DE.
+
+Something we can do is analys stationary points and the stability of $f$ instrad of solutions.
+\subsubsection{Stationary points}
+\begin{definition}
+    A stationary point is a point $x^*$ such that $f(x^*) = 0$
+\end{definition}
+\begin{example}
+    \[\frac{dx}{dt} = x^2 - 1\]
+    For this the stationary points are $x(t) = \pm 1$
+\end{example}
+\subsubsection{Stability}
+We dont analyse the stability of the whole function but instrad the stability at stationary points.
+\begin{definition}
+    A stationary point $x^*$ is stable if nearby solutions stay nearby as $t \to \infty$. otherwise we may call it unstable. This is a local property. 
+\end{definition}
+\begin{lemma}
+    If $x^*$ is a stationary point of the DE then 
+    \begin{itemize}
+        \item $f'(x^*) > 0$ Then its insytable
+        \item $f'(x^*) < 0$ Then its stable
+        \item $f'(x^*) = 0$ is indeterminate
+    \end{itemize}
+\end{lemma}
+\begin{proof}
+    Consider points slightly to the left and right of $x*$. LEt us now consider cases
+    \begin{enumerate}
+        \item Consider $f'(x^*) > 0$. On the left $f(x) < 0$ and on the right $f(x) > 0$. This means if $x > x^*$ due to the derivative being positive $X$ will grow away from the fixed point to the left. The same argument applies on the left except for the fact it moves away on the left. As such starting off you get pushed away from the stationary point
+        \item For this case $f'(x^*) < 0$. So on the left $f(x) > 0$ and on the right $f(x) < 0$ this means that we are pushed towards $x$ on both sides.
+        \item The derivatives on either side could be either positive or negative so would require further analysis. Consider $f(x) = x^2$ on the left $f(x) > 0$ Pushing to towards the fixed point. On the right $f(x) > 0$ aswell so we are still moving to the right. So it is stable in one direction and unstable in another. This is called a saddle point.
+    \end{enumerate}
+\end{proof}
+\begin{example}
+    \[\frac{dp}{dt} = kp\left(1 - \frac{p}{p_m}\right)\]
+    First step is to find the stationary points of the equation. For this it is $p = 0,p_m$. We can extract that 
+    \[f(p) = kp\left(1 - \frac{p}{p_m}\right)\]
+    \[f'(p) = k\left(1 - \frac{2p}{p_m}\right)\]
+    As such we can see $f'(0) = k$ so $p = 0$ is an unstable stationary point. On the other hand $f'(p_m) = -k$ so $p = p_m$ is a stable stationary point. This is all under the assumption $k > 0$ A physical interpretation of this is a population likes to grow to its maximum and stay there.
+\end{example}
+\section{Lecture 11 - Bifurcations}
+Our goal is to be able to study how stationary points chane with a paramenter.
+\begin{definition}
+    A bifurcation is where a small change causes a big change in stationary point behaviour.
+\end{definition}
+\subsection{Saddle point bifurcation}
+\begin{example}
+    \[\frac{dx}{dt} = r + x(t)^2,r \in \mathbb{R}\]
+    \[f(x) = r + x^2\]
+    \[f'(x) = 2x\]
+    Solving for $x^*$ such that $f(x^*) = 0$ we get $x^* = \pm \sqrt{-r}$.
+    For this we have 3 cases for r to consider $r>0,r=0,r<0$ 
+    \begin{itemize}
+        \item Consider $r > 0$. this leads to there being no stationary points as negative roots are undefined on $\mathbb{R}$
+        \item Consider $r = 0$ This leds to one stationary point of $x^* = 0$. We also then get $f'(0) = 0$. On bot sides of zero $f(x) > 0$ this means that its a saddle point. Stable from the left but unstable from right.
+        \item Consider $r < 0$ we have 2 stationary points $x^{*}_{\pm} = \pm \sqrt{-r}$. As $f'(x^*_+) > 0$ this is unstable and at $f'(x^*_-) < 0$ so stable. 
+    \end{itemize} 
+\end{example}
+\subsection{Bifurcation Diagram}
+This is a diagram to visualise how the parameters affect stationary points. Here we plot the parameter against the fixed points and draw a stable fixed point as a solid line and unstable as a dashed line. 
+\subsection{Transcritical bifurcation}
+\begin{example}
+    \[\frac{dx}{dt} = rx(t) - x(t)^2\]
+    \[f(x) = rx - x^2\]
+    \[f'(x) = r - 2x\]
+    We can find two statiopnary points $x^*_1 = 0$ and $x^*_2 = r$. 
+    We will investigate 3 cases.
+    \begin{enumerate}
+        \item Consider $r = 0$. So therefore we will have only one fixed point. In this case $f'(r) = 0$. $f(x) < 0$ on both sides so is a saddle point so is stable on the right and unstable on the left.
+        \item Consider now $r > 0$. We are now guranteed two stationary points. $f'(0) = r,f'(r) = -r$. This means that $x^*_1$ is unstable and that $x^*_2$ is stable.
+        \item In the final case we have $r < 0$ which just reverses the stability of the fixed points.
+    \end{enumerate}
+\end{example}
+\section{Lecture 12 - Bifurcations Cont.}
+\subsection{Pitchfork Bifurcation}
+\begin{example}
+    \[\frac{dx}{dt} = rx(t) - x(t)^3\]
+    \[f(x) = rx - x^3\]
+    \[f'(x) = r - 3x^2\]
+    We can find the stationary points of this system as $x^*_1 = 0,x^*_2 = \sqrt{r},x^*_2 = -\sqrt{r}$.
+    We can investigate the normal three cses 
+    \begin{enumerate}
+        \item Consider $r < 0$ there is only one stationary point $x^* = 0$ and $f'(0) = r < 0$ so this is stable
+        \item Consider now that $r = 0$ this gives one root of multiplicity 3 $x^* = 0$. We have that $f'(0) = 0$. On the left of zero $f$ is postive and on the right $f$ is negative so this means that this is an stable fixed pint
+        \item Consider now $r > 0$ we have three stationary points.
+            \begin{enumerate}
+                \item $f'(0) = r > 0$ So this is unstable
+                \item $f'(\sqrt{r}) = -2r < 0$ So this is stable
+                \item $f'(-\sqrt{r}) = -2r < 0$ So this is stable
+            \end{enumerate}
+    \end{enumerate}
+\end{example}
+\begin{example}
+    Consider the population grwoth equation
+    \[\frac{dp}{dt} = rp(t)\left(1 - \frac{p(t)}{p_m}\right) - cp(t),r,p,c > 0,0\le p \le p_m\].
+    By non-dimensionalising we can transform the equation as follows.
+    \[\frac{dp}{dt} = p(t)(1-p(t)) - cp(t)\]
+    Where al these are the non dimensionalised versions of the varibales. We can analyse this for 2 stationary points. $p*_1 = 0,p^*_2 = 1 - c$ and we also know $f'(p) = (1-c) - 2p$.
+    \begin{enumerate}
+        \item The first case we will consider $0 < c < 1$. Which gives us 2 stationary points 
+        \begin{enumerate}
+            \item $f'(0) = 1 - c > 0$ so unstable
+            \item $f'(1-c) = -(1 - c) < 0$ So stable. 
+        \end{enumerate}
+        \item Now consider the second case $c = 1$ Whcih goves us one stationary point $p^* = 0$. $f'(0) = 0$ and to the left of the point $f$ is negative and on the right $f$ is negative so this is a saddle.
+        \item When $c > 1$ This forces one of the stationary points to be negative which is outside of the bounds of this question. As such we only have $p^* = 0$. $f'(0) = (1 - c) < 0$ So this is stable.
+    \end{enumerate}
+    \textbf{FISHING CONTEXT}
+\end{example}
+\section{Lecture 13 - Linear 2-ODE}
+In this sectionof the module we will consider diffrenctial equations of the form 
+\[a(t)\frac{d^2x}{dt^2} + b(t)\frac{dx}{dt} + c(t)x(t) = s(t)\]
+Considering the simplest form of the problem of the second derivatve of $x$ being 0 we find we need to solve for 2 constants. As such the inital value problem will require two initial condiiotn the value for $x_0$ at $t_0$ as well as a value for $\dot{x_0}$.
+
+These problems are generally solved in two parts. First is to solve the homogenous part of the equation with the initial conditions. Further if we have $x_1,x_2$ are two solutions to this part any linear combination of these two are aslo a solution. The proof of this is fairly trivial by linearity and can be done by sibsitutiting a general linear combination in. This linear combination is called the complementary function.
+
+The next step is to investigate the inhomogenous equation. We attempt to find a $x_p$ satsifying the DE with both the initial condtions set to zero. Thi si called the particular solution. By setting the initial conditions for this to zero we allow the initial condition to be satisfied by the complementary part. The fact the sum of these two satify the full DE is also very trivial and can be done by liearity.
+\section{Lecture 14 - Inhomgoenous second order diffrenctial equations}
+Consider diffrential equations of the form 
+\[a\ddot{x} + b\dot{x} + cx = s(t)\]
+There are slightly different solutions for different forms of the functions $s$
+
+\begin{example}
+    \[\ddot{x} + \dot{x} - 2x = t^2\]
+    \[x(0) = \dot{x}(0) = 1\]
+\end{example}
+We will start by making an attempt to find the particular integral. For this particular case we will make a guess of the form of the particular integral as being $p_2t^2 + p_1t + p_0$. In general if $s$ is a polynomail of order $n$ we want to use a polynomial of order $n$ as a guess for the particaukar integral.  From this guess we get
+\begin{align*}
+    x &= p_2t^2 + p_1t + p_0 \\
+    \dot{x} &= 2p_2t + p_1 \\
+    \ddot{x} &= 2p_2
+\end{align*}
+We can then substitute thise terms back into the orginial equation and then follow by grouping the like terms giving us the equation.
+\[-2p_2t^2 + (2p_2 - 2p_1)t + (2p_2 + p_1 - 2p_0) = t^2\]
+We can then by comparing coefficients determine all of the coefficients and get $p_0 = -\frac{3}{4},p_1 = -\frac{1}{2},p_2 = -\frac{1}{2}$
+
+Then we now must solve for the complementary function. The roots of the cgharecteroistic polynomial is $\lambda_1 = -2,\lambda_2 = 1$. This gives us the general form of 
+\[l_1 e^{-2t} + l_2e^t - \frac{1}{2}t^2 -\frac{1}{2}t - \frac{3}{4}\]
+Note here that the particular part contributes to the initial condition. As fining particular solutions can be hard enough anyways we will simply solve the rest of the initial conditions around it. We can then therefore solve $l_1 = \frac{1}{12},l_2 = \frac{5}{3}$. This gives us the final solution of 
+\[\frac{1}{12} e^{-2t} + \frac{5}{3} e^t - \frac{1}{2}t^2 -\frac{1}{2}t - \frac{3}{4}\]
+Now lets conisder a new example 
+\begin{example}
+    \[\ddot{x} + \dot{x} - 2x = e^{-t}\]
+\end{example}
+We know that our particular integral and its derivatives will be of the following form
+\begin{align*}
+    x &= ke^{-t} \\
+    \dot{x} = -ke^{-t} \\
+    \ddot{x} = ke^e{-t}
+\end{align*}
+We would have run into a problem if $s(t) = e^t$ as this would overlap with part of the solution to the complementary function and in that case we would need to add a factor of $t$.
+
+We cant skip straight to the initial condition probelm as we would have 3 variables to solve for against 2 conditions so we solve for $k$ by cheking against the diffrential equation. Subbing these in and solving for $k$ we find $k = -\frac{1}{2}$ This leaves us with
+\[x = l_1 e^{-2t} + l_2 e^t - \frac{1}{2}e^{-t}\]
+Now we must solve for $l_1,l_2$ against the initial conditions and get as follows 
+\[x = \frac{1}{3} e^{-2t} + \frac{7}{6} e^t - \frac{1}{2}e^{-t}\]
 \end{document}

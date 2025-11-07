@@ -22,6 +22,7 @@
 \newtheorem{definition}{Definition}
 \newtheorem{proposition}{Proposition}
 \newtheorem{example}{Example}
+\newtheorem{theorem}{Theorem}
 Consider a simple probability problem. I have a bag with 20 balls of three different colours 4 red balls 6 blue balls and 10 green balls. A simple question to be asked is what is $\mathbb{P}(\text{red})$. From intuition you know this number is $\frac{4}{20}$ but it is important to formalise what's going on.
 \subsubsection{Sample Space}
 We can say that red green and blue are three $\textbf{outcomes}$ that can occur. It can be useful to collect these three events together into a set as such $\{\text{red},\text{blue},\text{green}\}$.
@@ -287,6 +288,315 @@ We can now also look at some derived properties of the event space inhering from
 \end{proposition}
 \begin{proposition}
     Booles inequality : If $(\Omega,\mathcal{F},\mathbb{P})$ is a propbabilty space then for a list $A_1,\dots,A_n \in \mathcal{F}$ then
-    \[\mathbb{P}\left(\bigcup_{k=1}^n A_n\right) \le \sum_{k=1}^{n}(\mathbb{A_n})\] 
+    \[\mathbb{P}\left(\bigcup_{k=1}^n A_n\right) \le \sum_{k=1}^{n}\mathbb{P}(A_n)\] 
 \end{proposition}
+\begin{proof}
+    By induction on $n$
+    \begin{itemize}
+        \item Base case $n = 2$. $\mathbb{P}(A_1 \cup A_2) = \mathbb{P}(A_1) + \mathbb{P}(A_2) - \mathbb{P}(A_1 \cap B_2) \le \mathbb{P}(A_1) + \mathbb{P}(A_2)$
+        \item Assume its true for some $n = k$.
+        \begin{align*}
+            \mathbb{P}(\bigcup_{j=1}^{k+1}A_j) &= \mathbb{P}(\bigcup_{j=1}^{k}A_j \cup A_{k+1}) \\
+            &= \mathbb{P}(\bigcup_{j=1}^{k}A_j) + \mathbb{P}(A_{k+1}) - \mathbb{P}(\bigcup_{j=1}^{k}A_j \cap A_{k+1}) \\
+            &\le \mathbb{P}(\bigcup_{j=1}^{k}A_j) + \mathbb{P}(A_k+1) \\
+            &\le \sum_{j=1}^{k+1}\mathbb{P}(A_j)
+        \end{align*} 
+    \end{itemize}
+\end{proof}
+\section{Lecture 7 - Conditional Probability}
+Suppose we are doing an experiment and an we have knowledge that an event $B$ has happened. Knowing this how can we find the probability that another event $A$ has happened. We call theis the prbability of $A$ given $B$ with this event denoted as follows
+\[\mathbb{P}_B(A) = \mathbb{P}(A|B) = \frac{\mathbb{P}(A \cap B)}{\mathbb{P}(B)}\]
+\begin{proposition}
+    Let $(\Omega,\cal{F},\mathbb{P})$ be a probability space and let $B \in \cal{F}$ Define $\mathbb{P}_B : \cal{F} \to \mathbb{R}$ as $\mathbb{P}_B(A) = \mathbb{P}(A|B)$. $\mathbb{P}_B$ is a probability measure
+\end{proposition}
+\begin{proof}
+    There are three propterites to be checked.
+    \begin{enumerate}
+        \item It is known that $\mathbb{P}(A) \in [0,1]$ for all $A \in \cal{F}$. We also know that for this $A$, $A \cap B \in \mathcal{F}$. This means that $\mathbb{P}(A \cap B)$ is defined. We know that $\mathbb{P}(A \cap B) \le \mathbb{P}(B)$ Therefore 
+        \[\frac{\mathbb{P}(A \cap B)}{\mathbb{P}(B)} \in [0,1]\]
+        \item \[\mathbb{P}_B(\Omega) = \frac{\mathbb{P}(B \cap \Omega)}{\mathbb{P}(B)} = 1\]
+        \item The next property to check is coiuntable additivity. Let for all $n,A_n \in \cal{F}$ and let them all be pariise disjoint.
+        \begin{align*}
+            \mathbb{P}_B(\bigcup_{n=1}^\infty A_n) &= \frac{\mathbb{P}_B(\bigcup_{n=1}^\infty A_n \cap B)}{\mathbb{P}(B)} \\
+            &= \frac{1}{\mathbb{P}(B)}\mathbb{P}(\bigcup_{n = 1}^\infty A_n \cup B) \\
+            &= \sum_{n=1}^{\infty} \frac{\mathbb{P}(A_n \cup B)}{\mathbb{P}(B)} \\
+            &= \sum_{n=1}^{\infty}\mathbb{P}_B(A_n)
+        \end{align*}
+        This assumed we were able to aplpy countable additivity to the orginal measure which requires $A_n \cap B$ to be pariwise disjoint
+        \[(A_n \cap B) \cap (A_m \cap B) \subseteq A_n \cap A_m = \emptyset\] 
+    \end{enumerate}
+\end{proof}
+This equation leads us to the multiplication rule 
+\begin{theorem}
+    Multiplication rule : $\mathbb{P}(A_1 \cap \cdots \cap A_n) = \mathbb{P}(A_1)\mathbb{P}(A_1|A_2)\mathbb{P}(A_3|A_1 \cap A_2) \cdots$
+\end{theorem} 
+this is proven using an expansion of the law of consitionak probability
+\section{Lectire 8 + 9 : Firther applications}
+If we wanted to know the probability of an event $C$ happening. We can consider all of the disjoint cases in which it could happen and take some kind of weighted mean of all of these probabilities to find $C$. This is the law of toal probability. 
+\begin{theorem}
+    $\mathbb{P}(C_2) = \mathbb{P}(C_2|C_1)\mathbb{P}(C_1) + \mathbb{P}(C_2|C_1^C)\mathbb{P}(C_1^C)$
+\end{theorem}
+\begin{proof}
+    Diue to the fact $(C_1 \cup C_2) = \Omega$ The event $C_2 = (C_2 \cap C_1) \cup (C_2 \cap C_1^C)$. Then by application of finite additivity and the law of conditoinal probability the law of total probability can be derived
+\end{proof}
+This result can be futher generalised
+\begin{theorem}
+    Law of Total probability: Let $\{B_n | n \in [[N]] \}$ be a partition of $\Omega$. We can say \[\mathbb{P}(A) = \sum_{n=1}^{N} \mathbb{P}(A|B_n)\mathbb{P}(B_n)\]  
+\end{theorem}
+The proof is done in the same way by the aprreciation of the union of $B_n = \Omega$ and then applying countable additivitty and the laws of consitional probability.
+\section{Lecture 10 - Random Variables}
+Consider having done a random experiment which is quite complex as is the sample scpase $(\Omega)$ as such the indiviual events $(\cal{F})$ are also complex but these events are such that we know wether they have happened or not. 
+
+Very often we wish to abstract these elements of $\Omega$ to something much simpler i.e something that has a numerical value given by the random process.
+
+We can express this random variable as a function $X : \Omega \to \mathbb{R}$. This course will only consider random variables into the real numbers.
+\begin{definition}
+    Random Variable: Let $(\Omega,\cal{F},\mathbb{P})$ be a probability space. A real-valued random variable is a function $X:\Omega \to \mathbb{R}$ such that $\{\omega \in \Omega | X(\omega) \le a\} \in \cal{F}$ for all $a \in \mathbb{R}$ (This says that specifying conditions via $X$ gives an event that we can determine wether it has happened or not) 
+\end{definition}
+\begin{example}
+    Consider rolling tow dice. You win money given by given by the greater value amongst the dice rolled. In this case
+    \[\Omega = \{1,2,3,4,5,6\}^2\]
+    \[X(x,y) = max(x,y)\]
+    It can be seen that using the random varable $X$ simplifies the outcomes in $\Omega$
+    \[\mathbb{P}(X = \overline{y}) = \mathbb{P}(\omega \in \Omega | X(\omega) = 5) = \frac{1}{5}\]
+\end{example}
+We can see at the end we use a condition on $X$ in order to specify an event. Intead in an inequality an equality was used but this can be shown to be inside of $\mathcal{F}$ by closere of $\cal{F}$ under set difference
+
+We can consider the a new probability measure on $\mathbb{R}$ induced by the random variable $X$ and if this is all we care about we can leave the old prbability space behond and only cosider $\mathbb{R}$ as our sample space
+\begin{definition}
+    Distrobution: The distrobution of a random variable $X$ is the probability measure on $\mathbb{R}$ given by 
+    \[\mathbb{P}_X(B) = \mathbb{P}(\{\omega \in \Omega | X(\omega) \in B\}\]
+    such that $B \in \mathbb{R}$
+\end{definition} 
+\begin{example}
+    Cont. $\mathbb{P}_X(\{k\}) = \frac{2k-1}{36}$ for $k = 1,2,3,4,5,6$ 
+    
+    otherwise $\mathbb{P}(\mathbb{R} \setminus \{1,2,3,4,5,6\}) = 0$
+\end{example}
+\begin{definition}
+    Event Space: We will usually denote the envent space on $\mathbb{R}$ denoted $\mathcal{B}(\mathbb{R})$ contains singletons $\{x\}$ and intervals $(a,x]$ And is close under countable set operations as is $\mathcal{F}$. We have no need to be able to lost elements.
+\end{definition}
+\begin{definition}
+    The triplet $(\mathbb{R},\mathcal{B}(\mathbb{R}),\mathbb{P}_X)$ is a simpler derived probability space.
+\end{definition}
+\begin{proposition}
+    The function $\mathbb{P}_X$ is a proabbility measure on $R$
+\end{proposition}
+\begin{proof}
+    We must check the three conditions of probability measure
+    \begin{enumerate}
+        \item $\mathbb{P}_X(B) = \mathbb{P}(\{\omega \in \Omega | X(\omega) \in B\}) \in [0,1]$
+        \item $\mathbb{P}_X(\mathbb{R}) = \mathbb{P}(\{\omega \in \Omega | X(\omega) \in \mathbb{R}\}) = \mathbb{P}(\Omega) = 1$
+        \item Suppose $B_1,B_2,\dots \in \mathcal{B}(\mathcal{R})$ are disjoint.
+        \begin{align*}
+            \mathbb{P}_X\left(\bigcup_{n=1}^\infty B_n\right) &= \mathbb{P}(\{\omega \in \Omega | X(\omega) \in \bigcup_{n=1}^\infty B_n\}) \\
+            &= \mathbb{P}(\bigcup_{n=1}^\infty\{\omega \in \Omega | X(\omega) \in  B_n\}) \\
+            &= \sum_{n=1}^{\infty}\mathbb{P}(\{\omega \in \Omega | X(\omega) \in  B_n\}) \\
+            &= \sum_{n=1}^{\infty} \mathbb{P}_X(B_n)
+        \end{align*}
+        This uses thhe facts that pre-image of the union is the union of the pre-image; that pre-image of disjoint sets are disjoint,
+    \end{enumerate}
+\end{proof}
+\section{Lecture 11}
+\begin{definition}
+    Let $(\mathbb{R},\mathcal{B}(\mathbb{R}),\mathbb{P}_X)$ be an induced probability space. We may it is discrete if there exist a countable or finite set $S \subseteq R$ such that $\mathbb{P}(X \in \mathbb{R} \setminus S) = 0$ 
+\end{definition}
+\begin{definition}
+    Let $(\mathbb{R},\mathcal{B}(\mathbb{R}),\mathbb{P}_X)$ be a probility spacee and $X$ be drv we define the prbability mass function $p_X : \mathbb{R} \to [0,1]$ as follows
+    \[p_X(x) = \mathbb{P}_X(x)\]
+    This is a simpler function as it allwos us to investigate individual probabilities instead of those fo a set.
+\end{definition}
+\begin{definition}
+    Let $(\mathbb{R},\mathcal{B}(\mathbb{R}),\mathbb{P}_X)$ be a probability space and $X$ be a drv. We may define the discrete support of $X$ or $\mathbb{P}_X$ as follows 
+    \[\{x \in \mathbb{R} | p_X(x) > 0\}\]
+\end{definition}
+\begin{proposition}
+    Let $X$ be a drv and $D_X$ be its support
+    \[\mathbb{P}_X(B) = \sum_{x \in B \cap D^C}p_X(x)\]
+\end{proposition}
+\begin{proof}
+    We know there is a $S \subseteq \mathbb{R}$ such that $\mathbb{P}_X(S) = 0$. From here we can determine that $D^C$ is countable as $D \subseteq  S$.
+    We may say that 
+    \[P_X(B) = P_X(B \cap D) + P_X(B \cap D^C)\]
+    The second term has to be zero as $B \cap D^C \subseteq D^C$ so $0 \le P_X(B \cap D^C) \le P_X(D^C) \le 0$
+    We can then evaluate as follows
+    \begin{align*}
+        P_X(B) &= P_X(B \cap D) \\
+        &= P_X\left(\bigcup_{x \in B \cap D}\{x\}\right) \\
+        &= \sum_{x \in B \cap D}P_X(\{x\}) \\
+        &= \sum_{x \in B \cap D}p_X(x)
+    \end{align*}  
+\end{proof}
+From here we have the fact that $p_X$ caontains all the information of $\mathbb{P}_X$ as the latter can be reconstructed from the fomrer.
+\section{Lecture 12}
+As said before $D_X$ doest necessarilly equal $S$
+\begin{example}
+    Consider rolling a die. $\Omega = \{1,2,3,4,5,6\}$, $X:\Omega \to \mathbb{R}, X(k) = k$.
+    From here we get the definition of $D_X = \{1,2,3,4,5,6\}$ which is a suitable candidate for $S$. But this is not the only choice. Any countable extention of $D_X$ is also a candidate for example $S = \mathbb{N}$ as there are no elements in $\mathbb{N}^C$ that are in $D_X$ so $\mathbb{P}_X(\mathbb{N}^C) = 0$
+\end{example}
+\begin{definition}
+    A function $f : \mathbb{R} \to [0,1]$ is a function is the set $D$ defined as follows
+    \[D = \{\{x | f(x) > 0\}\}\]
+    Is countable and $\sum_{k \in D}f(k) = 1$
+\end{definition}
+This gives us a definition of a probability mass function without already having a space. We can however construct a space from here.
+\begin{proposition}
+    LEt $f$ be a proabbaility mass function. Then there exist a probability space $(\Omega,\mathcal{F},\mathbb{P})$ and a drv $X$ such that $p_X = f$
+\end{proposition}  
+\begin{proof}
+    Take $D$ to be the discrete support of $f$. Let $\Omega = \mathbb{R},\mathcal{F} =\mathcal{B}(\mathbb{R}),\mathbb{P}(B) = \sum_{x \in B \cap D}f(x)$
+    
+    We now need to prove that $\mathbb{P}$ is a measure
+    \begin{itemize}
+        \item \[\mathbb{P}(\mathbb{R}) = \sum_{k \in \mathbb{R} \cap D}f(k) = \sum_{x \in D}f(x) =  1\]
+        \item $\mathbb{P} \in [0,1]$
+        \item Suppose $A_1,\dots,A_n \in \mathcal{F}$ are all pairwise disjoint.
+        \begin{align*}
+            \mathbb{P}\left(\bigcup_{n = 1}^{\infty}A_n\right) &= \sum_{k \in \left(\bigcup_{n = 1}^{\infty}A_n\right) \cap D}f(x)\\
+            &= \sum_{k \in \left(\bigcup_{n = 1}^{\infty}A_n \cap D\right)}f(x) \\
+            &= \sum_{n = 1}^{\infty} \sum_{x \in A_n \cap D}f(x) \\
+            &= \sum_{n = 1}^{\infty} \mathbb{P}(A_n)
+        \end{align*}
+    \end{itemize}
+    Now we need to construct the DRV. LEt $X(x) = x$. $X$ has the right domain and codomain. and we can also say $\mathbb{P} = \mathbb{P}_X$. We also need to check it has an opporopriate countable set $S$ For this we may try D.
+    \[\mathbb{P}_X(\mathbb{R} \setminus D) = \mathbb{P}_X(D^C) = \mathbb{P}(D^C) = \sum_{x \in D^C \cap D}f(x) = 0\]
+    Finally we need to check $f$ is the probabilit mass function for $X$. If $x \in D$ 
+    \[p_X(x) = \mathbb{P}_X(\{x\}) = \mathbb{P}(\{x\}) = \sum_{x \in \{x\} \cap D}f(x) = f(x)\]
+    Otherwise 
+    \[p_X(x) = \mathbb{P}_X(\{x\}) = \mathbb{P}(\{x\}) = \sum_{x \in \{x\} \cap D}f(x) = \sum_{x \in \emptyset}f(x) = 0 = f(x)\]
+\end{proof}
+Now lets look at some experiments that are discrete spaces.
+\begin{example}
+    Imagine tossing a $p$-coin which is a coin where the probability of heads is $p$. We may construct our space as follows.
+    $\Omega = \{H,T\},\mathbb{P}(\{H\}) = p,\mathbb{P}(\{T\}) = 1 - p$. We may define $X: \Omega \to \mathbb{R}$ as $X(H) = 1,X(T) = 0$. We may then say $X \sim \text{Bernoulli}(p)$
+\end{example}
+\begin{definition}
+    Where $p \in [0,1]$ we may say $X \sim \text{Bernoulli}(p)$ if
+    \[p_X(x) = \begin{cases}
+        p & x = 1 \\
+        1 - p & x = 0 \\
+        0 & \text{otherwise}
+    \end{cases}\]
+\end{definition}
+\begin{example}
+    Consider another experiment where we toss the $p$-coin till we gewt heads. Let $X$ map to the number of tosses and $\Omega$ be the set of sequences of tails which then end in heads.
+    \[\mathbb{P}(\{\underbrace{T \dots T}_{k \text{ times}}H\}) = (1-p)^kp\]
+    \[X(\{\underbrace{T \dots T}_{k \text{ times}}H\}) = k+1\]
+\end{example}
+\begin{definition}
+    We can say $X \sim \text{Geom}(p)$ if
+    \[p_X(k) = \begin{cases}
+        p(1-p)^k-1 & k \in \mathbb{N} \\
+        0 & \text{Otherwise}
+    \end{cases}\]
+\end{definition}
+\begin{definition}
+    $X \sim Bin(n,p)$ where $n \in \mathbb{N},p \in [0,1]$ if 
+    \[p_X(k) = \begin{cases}
+        \binom{n}{x}p^x(p-1)^{(n-x)} & k \in \{0,\dots,n\} \\
+        0 & \text{Otherwise}
+    \end{cases}\]
+\end{definition}
+\section{Lecture 13}
+Expectation: Sometimes we want to consider question such as what is the average outcome of a roll of a dice. in order to do this we may calculuate some form of a weighted mean.
+\[\frac{1}{6}(1 + 2 + 3 + 4 + 5 + 6) = 3.5\]
+We call this number the expectation of reolling a dice
+\begin{definition}
+    Consider a discrete random variable $X$ with a suppoer $D$ and a mass function $p_X$ We define the expectation of $X$ denoted $\mathbb{E}(X)$ defined as follows
+    \[\mathbb{E}(X) = \sum_{x \in D} xp_X(x)\]
+    As long as it converges absolutley (sum of absolute values converges), Otherwise the expectation is undefined
+\end{definition}
+\begin{definition}
+    A drv $X$ with support $D$ and probability mass function $p_X$ is integrable if the sum
+    \[\sum_{x \in D} |x|p_X(x)\]
+    converges
+\end{definition}
+\begin{example}
+    Consider $X \sim B(n,p)$
+    \begin{align*}
+        \mathbb{E}(X) &= \sum_{k = 0}^{n}k\binom{n}{k}p^k(1-p)^{n-k} \\
+        &= \sum_{k = 1}^{n}n\binom{n-1}{k-1}p^k(1-p)^{n-k} \\
+        &= n\sum_{j = 0}^{n - 1}\binom{n - 1}{j}p^{j+1}(1-p)^{n-j-1} \\
+        &= np\sum_{j = 0}^{n - 1}\binom{n - 1}{j}p^{j}(1-p)^{n-j-1} \\
+        &= np(p + (1-p))^{n-1} \\
+        &= np
+    \end{align*}
+\end{example}
+Comsider now fixing this value $\lambda = np$. This leads us to the following experiment. We may consider tossing the $p$-coin $n$ times such that the expected number of heads is fixed.
+\[\mathbb{P}(X = k) = \binom{n}{k}p^k(1-p)^{n-k} = \frac{n!}{k!(n-k)!}\left(\frac{\lambda}{n}\right)^k \left(1 - \frac{\lambda}{n}\right)^{n-k} = \frac{\lambda^k}{k!} \frac{n!}{n^k (n-k)!} \left(1 - \frac{\lambda}{n}\right)^{n} \left(1 - \frac{\lambda}{n}\right)^{-k}\]
+Taking the limit of $n \to \infty$ we get this is equal to
+\[\frac{\lambda^k}{k!}e^{-\lambda}\]
+\begin{definition}
+    Poission Distobution : $X \sim Poiss(\lambda)$ if we may say that 
+    \[p_X(x) = \frac{\lambda^k}{k!}e^{-\lambda}\] 
+\end{definition}
+\begin{example}
+    LEt $X$ be a drv as a  indicator function of a set $A \in \mathcal{F}$. We can say here $E[X] = \mathbb{P}(A)$
+\end{example}
+\begin{example}
+    $X \sim Geom(P)$
+    \begin{align*}
+        E[x] &= \sum_{n = 1}^{\infty}n(1-p)^{n-1}p \\
+        &= p\sum_{n = 1}^{\infty}n(1-p)^{n-1} \\
+        &= p\sum_{n = 1}^{\infty}\frac{d}{d(1-p)}(1 - p)^{n} \\
+        &= p\frac{d}{d(1-p)}\sum_{n = 1}^{\infty}(1 - p)^{n} \\
+        &= p\frac{d}{d(1-p)}\frac{1}{1 - (1 - p)} \\
+        &= p \frac{-1}{(1 - (1-p)^2)} \\
+        &= p \frac{1}{p^2} \\
+        &= \frac{1}{p}
+    \end{align*}
+\end{example}
+\section{Lecture 15}
+\subsection{Expectation of functions}
+One interpretation of the expectation is as the centre of mass of the mean of a distrobution. This allows the expectation to act as a mean.
+
+If we have a 2 dimensional random variable $Z = (X,Y)$ We can say that $E[Z] = (E[X],E[Y])$
+Sometimes we tranform a ditrobution by a function $g : \mathbb{R} \to \mathbb{R}$ and we still want to find these expectations. We have been able to do this for linear functions but we may want to do this for $x^2$ as this is useful for variance.
+
+\begin{example}
+    Consider $X \sim Geom(p)$
+    \begin{align*}
+        E[X^2] &= \sum_{n = 1}^{\infty} n^2 (1-p)^{n - 1}p \\
+        &= p\sum_{n = 0}^{\infty}nx^{n - 1} + p\sum_{n = 0}^{\infty}n(n - 1)x^{n - 1} , x = 1 - p\\
+        &= p \sum_{n = 0}^{\infty} \frac{d}{dx}x^n + px\sum_{n = 0}^{\infty}n(n - 1)x^{n - 2}\\
+        &= p \frac{d}{dx}\left(\sum_{n = 0}^{\infty}x^n\right) + px \sum_{n = 0}^{\infty} \frac{d^2}{dx^2}x^n \\
+        &= p \frac{d}{dx}\left(\frac{1}{1 - x}\right) + px \frac{d^2}{dx^2}\left(\sum_{n = 0}^{\infty}x^n\right) \\
+        &= p\frac{1}{(1 - x)^2} + px\frac{2}{(1 - x)^3} \\
+        &= \frac{1}{p} + 2\frac{1 - p}{p^2}\\
+        &= \frac{2 - p}{p^2}
+    \end{align*}
+\end{example}
+\begin{example}
+    Consider $X \sim Geom(p)$
+
+    For what values of t is $e^{tx}$ integrable (Sum for expectation exists). As such compute $E[e^{tX}]$.
+    \begin{align*}
+        E[e^{tX}] &= \sum_{n = 1}^{\infty}e^{tn} p (1 - p)^{n - 1} \\
+        &= pe^t \sum_{n = 1}^{\infty}(e^t (1 - p))^{n - 1} \\
+        &= pe^t \sum_{k = 0}^{\infty}(e^t (1 - p))^k \\
+        &= \frac{pe^t}{1 - e^t(1 - p)} \\
+        &= \frac{p}{e^{-t} + p - 1} 
+    \end{align*}
+    Not this is only defined where $e^t(1-p) < 1$ so $t < \ln\frac{1}{1 - p}$
+\end{example}
+Consider for where it isnt integrable. This means that there is no expectation. Further if a random varibale does have an expectation a function of the random variable (even $x^2$) may not hadve a defined expectation.
+\subsection{Variance}
+Variance is used to measure the dispersion of a random variable
+\begin{definition}
+    (Square integrable r.v.) : A DRV $X$ is square integrable if $X^2$ is integrable.
+\end{definition}
+\begin{definition}
+    (Variance): Consider a Square integrable random variable $X$. Let $\mu := E[X]$
+    \[Var(x) = E[(x - \mu)^2]\]
+\end{definition}
+From here we can note that
+\[Var(X) = E[(X - \mu)^2] = E[X^2 - 2\mu X + \mu^2] = E[X^2] - 2\mu E[X] + \mu^2 = E[X^2] - \mu^2 \]
+\begin{example}
+    Consider $X \sim Poisson(\lambda)$
+    \[Var(X) = E[X^2] - E[X]^2 = \lambda + \lambda^2 - \lambda^2 = \lambda\]
+\end{example}
+\begin{example}
+    Consider $X \sim Geom(p)$
+    \[Var(X) = E[X^2] - E[X]^2 =\]
+\end{example}
 \end{document}

@@ -1,0 +1,357 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\title{MA-142}
+\author{Haria}
+\date{October 2025}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem*{theorem}{Theorem}
+\newtheorem{example}{Example}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{axiom}{Axiom}
+\begin{document}
+
+\maketitle
+
+\section{Lecture 1 - Sequence and limits}
+The procnciple aim for this cection of the module is to determine waht we mean when ewe make a statement such as 
+\[\lim_{n \to \infty} a_n = L\]
+The reason we want to be able to determine what tis means all of calculus including the definitions pof the derivcative and the integral are built upon this so in order to formally define those we must start on our limits
+\subsection{Sequences}
+\begin{definition}
+    A sequence is an ordered list of numbers $(a_1,a_2,a_3,\dots)$ or $(a_n : n \ge 1)$
+\end{definition}
+A sequence has multiple properties that we may discuss. Sequences may be either oscillating increasing or decreasing. Further we can say it is strictly increasing/decreasing if strict inequalities are used. Sequences can also have upper and lower bounds. These are values that we know every element in the sequence will be either lesser or greater than. Finally some sequences a=have expressions which allow you to compute the $n$th of the sequence.
+\begin{example}
+    The sequence $(1,1-\frac{1}{2},1-\frac{1}{2}+\frac{1}{3},\dots)$ is an oscillating sequence it has an upper bound of $1$ and a lower bound of $\frac{1}{2}$. this sequence also has a formula for itts $n$th tern givern as $a_n = \sum_{1}^{n}(-1)^{k+1}\frac{1}{k}$
+\end{example}
+\subsection{Limits}
+\begin{definition}
+    a sequence $(a_n : n \ge 1)$ can be said to converge to a limite $L$ if: For all $\epsilon > 0$, There exist an $N$ such that For all $n \ge N$, $|a_n - L| < \varepsilon$
+\end{definition}
+\begin{definition}
+    If a sequence $(a_n)$ does not converge to a limit we may say it diverges
+\end{definition}
+\begin{definition}
+    A sequence $(a_n)$ can be said to diverge to $\infty$ if: For all $C$, There exists an $N$ such that For all $n \ge N$, $a_n > C$ 
+\end{definition}
+\begin{proposition}
+    Let the sequence $(a_n)$ be given by $\sqrt{n}$ show that this sequence has limit $\infty$ 
+\end{proposition}
+\begin{proof}
+    Fix $C>0$. Then we choose $N$ to be the first integer strictly greater than $C^2$. This means we have for an $n \ge N$
+    \[n \ge N > C^2\]
+    \[\sqrt{n} > C\]
+\end{proof}
+\begin{proposition}
+    Let the sequence $(a_n)$ be defined by $a_n = \frac{n-1}{n}$ Show that this sequence converges to 1
+\end{proposition}
+\begin{proof}
+    Fix $\varepsilon > 0$. Let $N$ be the first integer strictly greater than $\frac{1}{\varepsilon}$. It is known that $|a_n - 1| = \frac{1}{n}$. Then we have for an $n \ge N$
+    \[|a_n - 1| = \frac{1}{n} \le \frac{1}{N} < \varepsilon\]
+\end{proof}
+\begin{proposition}
+    let the sequence $(a_n)$ be defined by $a_n = 2n^5 - n$. Show this sewuence diverges to $\infty$
+\end{proposition}
+This problem here is harder to do so lets intordiuce a tool that lets us solve this more easilly.
+\begin{lemma}
+    Comparison Lemma for Divergence: Given two sequences $(a_n : n \ge 1),(b_n : n \ge 1)$ and the fact $b_n \to \infty$ and that for all $n,a_n \ge b_n$ then we may aslo say that $a_n \to \infty$  
+\end{lemma}
+Now we can attempt to prove the proposition
+\begin{proof}
+    Let the sequence $(b_n)$ be defined by $b_n = n$. We can say that for all $n$ $a_n \ge b_b$. We also know that $n$ diverges to $\infty$. By the comparison lemma we now know that $a_n$ diverges to $\infty$ 
+\end{proof}
+\section{Lecture 2 - Algebra of limits}
+\subsection{Arithmetic Combinations}
+When we have two sequences $a_n$ and $b_n$ where we know that both of these converge to limits $A$ and $B$ respectively we can use arithmetic operation to combine these and form new limits.
+\begin{enumerate}
+    \item Sum rule: $a_n + b_n \to A + B$
+    \item Product rule: $a_n b_n \to AB$
+    \item Quotiant rule: Provided for all $n$ that $b_n \ne 0$ and $B \ne 0$ then $\frac{a_n}{b_n} \to \frac{A}{B}$
+\end{enumerate}
+\begin{proposition}
+    \[a_n = \frac{n^4 - n}{(2n^2 + n + 1)^2} \to \frac{1}{4}\]
+\end{proposition}
+\begin{proof}
+    It is known that $\frac{1}{n} \to 0$. therefor by application of the prodcut rule we can say both $\frac{1}{n^2}$ and $\frac{1}{n^3}$ converge on 0. We can also by simple rearrangeing say.
+    \[a_n = \frac{1 - \frac{1}{n^3}}{(2 + \frac{1}{n} + \frac{1}{n^2})^2}\]
+    By application of both the sum and quotient rules we can say that
+    \[a_n \to \frac{1}{2^2} = \frac{1}{4}\]
+\end{proof}
+\subsection{Squeeze theorem}
+\begin{proposition}
+    Squeeze theorem: Suppose you have three sequences $a_{n},b_{n},c_{n}$ such that for all n we know that $a_n \le b_n \le c_n$ and $a_n \to L,c_n \to L$. We may say that $b_n  \to L$ 
+\end{proposition}
+\begin{proof}
+    Fix $\varepsilon > 0$. As we know both $a_n$ and $c_n$ converge we can say there are two numbers $N_a,N_c$ such thet both of these sequences are within $\varepsilon$ of $L$.
+    We can then define $N = max(N_a,N_c)$. As such we can say for any $n \ge N$
+    \[L - \varepsilon \le a_n \le b_n \le c_n \le L + \varepsilon\]
+    \[|c_n - L| \le \varepsilon\]
+\end{proof}
+An occasionally useful lemma is given below 
+\begin{lemma}
+    Triangle inequality: $|x + y| \le |x| + |y|$
+\end{lemma}
+\section{Lecture 3 - More Techniques and tools}
+\subsection{Contradictions}
+One of the more useful proof techniques you will encountwer is the proof by contradiction. this works by making the assumption that $\neg P$ whcih is the nagation of the aim $P$ is true. By showing that $\neg P$ leads to contradiction we can conclude $\neg \neg P$ which is equivalent to $P$. This works in classical logic which most mathemeticans use though sometimes you may find yourself in a situation where the law of excluded middle is not assumed and as such double negation elimination does not hold and as such poof by contradiction cannot be done. This is especially useful when proving divergence as this is essentially showing that it cannot converge.
+\begin{proposition}
+    The series $(a_n) = (1,-1,1,-1,\dots)$ does not converge.
+\end{proposition}
+\begin{proof}
+    Suppose that $a_n \to A$. As such we can say for $\varepsilon = \frac{1}{2}$ that there exists an $N$ such that for all $n \ge N$   
+    \[A -\frac{1}{2} \le (-1)^n \le A + \frac{1}{2}\]
+    \[A -\frac{1}{2} \le (-1)^{n+1} \le A + \frac{1}{2}\]
+    Where these expressions are for $a_n,a_{n+1}$ respectively.
+    
+    We also have the fact that as the sequence oscillates between $\pm 1$ we can say $|a_{n} - a_{n+1}| = 2$ But from the inequalties above we also can say that $|a_{n} - a_{n+1}| \le 1$. Both cant be true so we arrive at a contraditcion so $a_n \not \to A$ 
+\end{proof}
+\subsection{Special Cases}
+Sometimes certain proofs are made easier by first considering a special Cases
+\begin{proposition}
+    Suppose $a_n \to A,b_n \to B$ and $a_n \le b_n$ then we may say that $A \le B$ 
+\end{proposition}
+\begin{proof}
+    \begin{itemize}
+        \item First lets consider the special case that $b_n = 0$ so therefore we have $a_n \to A,a_n \le 0$
+        
+        Suppose by contradiction that $A>0$. then there exists an $N$ such that for all $n \ge N, A - \varepsilon < a_n $ if we let $\varepsilon < A$ then $0 < a_n$ which is a contradiction so $A \le 0$
+        \item In general we can say that $a_n - b_n \to A - B$ and that $a_n - b_n \le 0$ so by the special case we can say $A - B \le 0$ so therefore $A \le B$ 
+    \end{itemize}
+\end{proof}
+\subsection{Useful Lemmas}
+\begin{lemma}
+    Power Lemma : As $n \to \infty$
+    \[x^n = \begin{cases}
+        \infty &x > 1 \\
+        1 &x=0 \\
+        0 & 0 \le x < 1
+    \end{cases}\]
+\end{lemma}
+\begin{lemma}
+    Root Lemma : As $n \to \infty$
+    \[x^{\frac{1}{n}} = \begin{cases}
+        1 &x > 0 \\
+        0 &x=0
+    \end{cases}\]
+\end{lemma}
+Here is how this can occasianlly be useful
+\begin{proposition}
+    $(2^n + 3^n)^{\frac{1}{n}} \to 3$
+\end{proposition}
+\begin{proof}
+    We can say that
+    \[3 \le (2^n + 3^n)^{\frac{1}{n}} \le (3^n + 3^n)^{\frac{1}{n}} = 2^{\frac{1}{n}} \times 3\]
+    So therefore by the root lemma and squeeze theorem we may say this converges to 3
+\end{proof}
+We will now attempt a proof of the power Lemme
+\begin{proof}
+    This proof will be done in 4 Cases
+    \begin{enumerate}
+        \item $x > 1$ therefore $x = 1 + h,h > 0$
+        \[x^n = (1 + h)^n = 1 + nh + \dots + h^n\]
+        \[x^n \ge nh\]
+        Therefore by the comparison lemma for this case $x^n \to \infty$
+
+        \item $x = 1$ This is a trivial case
+        \item $0 < x < 1$. Let $y = \frac{1}{x}$ therefore we can say $x^n = (\frac{1}{y})^n$.
+        
+        By case 1 we can say $y^n \to \infty$. By the Quotiaent lemma for diverging sequences we may say then that $x^n \to 0$
+        \item $x = 0$ this case is trivial
+    \end{enumerate}
+\end{proof}
+Here we used a lemma we have not yet proved so let us prove it
+\begin{lemma}
+    Quotient Lemme for diverging seuences. If $a_n \to \infty$ then $\frac{1}{a_n} \to 0$
+\end{lemma}
+\begin{proof}
+    Fix $\varepsilon > 0$ and let $C = \frac{1}{\varepsilon}$. Since $a_n \to \infty$ there is an $N$ such that for all $n \ge N, a_n \ge C = \frac{1}{\varepsilon}$. Therefore $|\frac{1}{n}| < \varepsilon$
+\end{proof}
+We can also prove the root lemma similaryl
+\begin{proof}
+    Let $a_n = x^{\frac{1}{n}} - 1$. this transofrms our aim to showing $a_n \to 0$
+    \begin{enumerate}
+        \item First lets consider the case of $x \ge 1$. this means that for all n $a_n \ge 0$
+        \[x^{\frac{1}{n}} = 1 + a_n\]
+        \[x =(1+a_n)^n = 1 + na_n + \dots \ge na_n \]
+        \[0 \le a_n \le \frac{x}{n}\]
+        Therefore by the squeeze theorem $a_n \to 1$
+        \item In the case that $0 < x < 1$ we can say that the same $a_n \le 0$. by applying the given steps previously we get the inequality
+        \[\frac{x}{n} \le a_n \le 0\]
+        To whcih we can apply the comparison lemma
+    \end{enumerate}
+\end{proof}
+\section{Lecture 5 - Chapter 2 Start}
+Aim : Show a sequences $(a_n: n \le 1)$ converges when we dont know what the limit is. A reaosn we may want to do this is to prove newton raphson converges on a root where we dont necessarilly know what the limit is as we are trying to find the root.This may be better when $|f''|$ is small.. This has a sequence
+\[a_{n+1} = a_n = \frac{f(a_n)}{f'(a_n)}\] 
+
+You also have Iterated function algorithms where you tranform an equation into the form $f(r) = r$ and solve for the interection of the original line. This is as you would generally see with staircase and cobweb diagrams.This is better when $f'(r)$ is small 
+\[a_{n+1} = f(a_n)\] 
+
+When using suh algorithms we dont know what the root is but we still want to be able to say it converges.
+\begin{definition}
+    A least upper bound is a number $U \in \mathbb{R}$ such that 
+    \begin{enumerate}
+        \item For all $n, a_n \le A$
+        \item For all upper bounds $U',U < U'$ 
+    \end{enumerate}
+\end{definition}
+\begin{theorem}
+    Wiererstrass theorem/criterion. Suppose you know that $a_n$ is increasing and that you know that $a_n$ is bounded above (there exist a $U$ such that for all $n, a_n \le U$)then there exist a limit $L$ such that $a_n \to L$
+\end{theorem}
+\begin{proof}
+    We can make a guess that the limit $A$ is the least upper bound of $a_n$ 
+    
+    Fix $\epsilon > 0$. As $L$ is an upperbound $a_n \le A \le A + \varepsilon$.
+    
+    If there exists an $N$ such that $a_N \ge A - \epsilon$ then for all $n \ge N, a_n \ge A - \varepsilon$ as $a_n$ is increasing. 
+    
+    Now we need to prove there is such an $N$. Suppose by contradiciton there is no such $N$. Then for all $n,a_n \le A - \varepsilon$ which would make $A - \varepsilon$ an upper bound less than the least upper bound leading to a contradiction. 
+
+    As such we have such an $N$ such that for all $n \ge N,a_n \ge A - \varepsilon$. combining the two inequalities. For all $n \ge N$
+    \[A - \varepsilon \le a_n \le A + \varepsilon\]
+\end{proof}
+All of this requires the existence of $\mathbb{R}$. Removing the irrational numbers leads to there potentially not being a least upperbound as there can be gaps in the number line. Very roughly the completeness axiom says that least upper bounds exist in $\mathbb{R}$ or that the real line has no holes as opposed to $\mathbb{Q}$. This is very roguhly because in $\mathbb{Q}$ for any upper bound for a sequence for an irationally limited sequence. This bound definitiallty cant be equal to this limit as it must be rational. So there is a nother rational lower bound inbetween these two. As such there can be no such least upper bound. 
+\begin{example}
+    \[a_n = (1 + \frac{1}{n})^n\]
+    We wish to aim that there exits a limit $e$ by the criterion so we aim to show
+    \begin{enumerate}
+        \item $a_n$ is increasing
+        \item $a_n$ is bounded by 3
+    \end{enumerate} 
+    \begin{proof}
+        We have 2 goals 
+        \begin{enumerate}
+                \item By the binaomial expansion 
+                \[a_n = \sum_{k = 0}^{n}{{n}\choose{k}}\frac{1}{n^k}\]
+                \[a_{n+1} = \sum_{k = 0}^{n+1}{{n+1}\choose{k}}\frac{1}{(n+1)^k}\]
+                The second sequence has one extra positive term but we also need to show 
+                \[\binom{n}{k}\frac{1}{n^k} \le \binom{n+1}{k}\frac{1}{(n+1)^k}\]
+                By expanding the sides
+                \[\frac{n(n-1)(n-2)\cdots(n-k+1)}{N\cdots N} \frac{1}{k!}\]
+                \textbf{THIS IS INCOMPLETE PLEASE COMPLETE}
+                \item We will do the minomail expansion again
+                \begin{align*}
+                    a_n &= \sum_{k = 0}^{n}{{n}\choose{k}}\frac{1}{n^k} \\
+                    & \le 1 + 1 + \frac{1}{2} + \frac{1}{3!} + \cdots + \frac{1}{n!} \\
+                    & \le 1 + 1 + \frac{1}{2} + \frac{1}{2^2} + \cdots + \frac{1}{2^{k - 1}}\\ 
+                    & = 1 + \left(\frac{1 - \frac{1}{2^n}}{1 - \frac{1}{2}}\right) \\
+                    & \le 3
+                \end{align*}
+        \end{enumerate}
+    \end{proof}
+    AS such we can say 
+    \[e := \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n\]
+\end{example}
+\section{Lecture 6}
+\subsection{Bounds on Sets}
+\begin{definition}
+    For a set $A \subseteq R$. $U$ is an upper bound if for all $a \in A,a \le U$
+\end{definition}
+\begin{definition}
+    For a set $A \subseteq R$. $L$ is an lower bound if for all $a \in A,a \ge U$
+\end{definition}
+\begin{definition}
+    For a set $A \subseteq R$. $\sup(A)$ is the least upper bound meaning that it is an upper bound and for any other upper bound $U,\sup(A) \le U$
+\end{definition}
+\begin{definition}
+    For a set $A \subseteq R$. $\inf(A)$ is the greatest lower bound meaning that it is an lower bound and for any other lower bound $L,\sup(A) \ge L$
+\end{definition}
+$\inf(A)$ is said the "infimum of A" ans $\sup(A)$ is said the "supremum of A".
+
+You may consider the supremum to be the maximum but consider the interval $[0,x)$. This set has no maximum element but $\sup([0,x)) = x$. This cant be the maximum as $x \not \in [0,x)$
+\subsection{Interlude - Convergence speed on $e$}
+Consider two sequences 
+\[a_n = \left(1 + \frac{1}{n}\right)^n\]
+\[b_n = \left(1 + \frac{1}{n}\right)^{n + 1}\]
+Both of these converge to $e$ but from either side so we can investigate error bounds
+\begin{align*}
+    |a_n - b_n| &= \left(1 + \frac{1}{n}\right)\left(\frac{1}{n}\right) \\
+    & \le \frac{e}{n}
+\end{align*} 
+Which is slow
+\subsection{Completeness}
+\begin{axiom}
+    Completeness (U.K.) : Any set $A \subseteq R$ that is non empty and bounded above has a supremum.
+\end{axiom}
+\begin{axiom}
+    Completeness (RU) : Suppose $A,B \subseteq R$ and non empty and $a \le b$ for all $a \in A,b \in B$ there exists $c \in R$ with $a \le c \le b$ for all $a \in A, b \in B$
+\end{axiom}
+\section{Lecture 7}
+We have the ability to declare when increasing and decreasing sequences converge (boundedness) by the wierstrauss convergence theorem. It would be nice to be able to do a simlar thing for oscillating sequences. Such a property is the Cauchy property.
+\begin{definition}
+    A sequence $(a_n : n \ge 1)$ has the cauchy property if for all $\varepsilon > 0$ there is an $N \ge 1$ such that 
+    \[|a_n - a_m| < \varepsilon,\text{ where }n,m\ge N\]
+\end{definition}
+Ad this has a corresponding theorem relating to convergence
+\begin{theorem}
+    Cauchys Criterion: A sequence $(a_n : n \ge 1)$ has the caushy property if and only if it is convergent.
+\end{theorem} 
+\subsection{Contracting sequences}
+\begin{definition}
+    We may call a sequence contracting if $|a_{n + 1} - a_{n}| \le \gamma|a_n - a_{n - 1}|$ where $|\gamma| < 1$
+\end{definition}
+This is essentially saying that a sequence that is contracting has the difference between terms reduce geometrically. This allows us to say that $a_{n + 1} - a_n| = \gamma^{n - 1}|a_2 - a_1|$ whch is easilly proven by induction. We can also make the following theorem
+\begin{theorem}
+    A contracting sequence has the cauchy property
+\end{theorem}
+\begin{proof}
+    By making use of the triangle inequality and the assumption $n > m$ we can rearrange as follows
+    \begin{align*}
+        |a_n - a_m| &= |a_n - a_{n - 1} + a_{n - 1} - a_m| \\
+        &\le |a_n - a_{n - 1}| + |a_{n - 1} - a_m| \\
+        &\le \dots \\
+        &\le |a_n - a_{n - 1}|  + |a_{n - 1} - a_{n - 2}| + \cdots + |a_{m + 1} - a_m|
+    \end{align*}
+    Subsitituting in the gemoetric relation we have above 
+    \[|a_n - a_{n - 1} = |a_2 - a_1|(\gamma^{n-2} + \cdots + \gamma^{m - 1}) = |a_2 - a_1|\frac{\gamma^{m - 1}}{1 - \gamma}\]
+    As we let $m \to \infty$ The entire expression tends towards zero because $\gamma^m \to 0$ So given any epsilon we may choose an $M$ such that the expression is less than epsilon from the fact it converges on zero.
+\end{proof}
+Checking for contraction is often easier than directly cheking for cauchys property.
+\section{Lecture 8}
+This contraction property can be used for checking if IFS sequences may converge. Given a sequence $a_{n + 1} = f(a_n)$. We may then say 
+\[a_{n+1} - a_n = f(a_{n}) - f(a_{n - 1}) = \int_{a_{n-1}}^{a_n}f'(t)dt \le (\max f')|a_n - a_{n - 1}|\]
+This tells us it only converges if the gradient less than one by the root.
+\subsection{The Cauchy Propery}
+Now we will attempt to prove the cauchy property.
+\begin{proof}
+    The cauchy is an if and only if statement so we will start by proving the "Convergence implies Cauchy direction. 
+    
+    Suppose a sequence $(a_n : n \ge 1)$ converges. Let us fix $\varepsilon > 0$. This means we know that there is an $N$ such that for all $n,m \ge N, |a_n - A| < 0.5\varepsilon$
+    \begin{align*}
+        |a_n - a_{m}| &= |a_n - A + A - a_m| \\
+        &\le |a_n - A| + |A - a_m| \\
+        &\le \varepsilon 
+    \end{align*}
+\end{proof}
+\begin{proof}
+    The next step is to show the cauchy property implies convergence. We will do this in 3 steps. Assuming $(a_n)$ has the cauchy property we start by showing it is bounded then we will geuss the limit a then prove this is infact the limit.
+
+    We will choose $N$ such that for all $n,m > N,|a_n - a_m| < 1$ So all these terms are at most one away from $a_{N}$ so the tail.This tells us that the long term behaviour for $(a_n)$ is to be bounded.
+    
+    We can define upper and lower  as follows
+    \[U_n = \sup{a_n,a_{n + 1},\dots}\]
+    \[L_n = \inf{a_n,a_{n + 1},\dots}\]
+    We know that $U_n$ is decreasing and $L_n$ is increasing due to the fact that terms are only leaving the sequences. As the sequence $a_n$ is bounded both of these have limits by the Weierrstrass theorem
+    \[\lim_{n\to\infty}U_n = \lim_{n\to\infty}\sup_{k \ge N}\sup{a_n,a_{n + 1},\dots} = A\]
+    \[\lim_{n\to\infty}L_n = \lim_{n\to\infty}\inf_{k \ge N}\sup{a_n,a_{n + 1},\dots} = B\]
+    
+\end{proof}
+\begin{definition}
+    A subsequence of $(a_n)$ is a sequence $(a_{N_1},a_{N_2},dots)$ such that $1 \le N_1 \le N_2$
+\end{definition}
+\begin{theorem}
+    Bolzano Weierrstrass every bounded sequence $(a_n)$ has a convergent subsequence.
+\end{theorem}
+We can use this thorem to construct a faster proof of the Cauchy Criterion (only the showing convergence direction)
+\begin{proof}
+    Assume $(a_n)$ has the Cauchy property
+
+    The proof that it is bounded is the same as before.
+
+    This means that by BW there exists a limit $\lim_{k \to \infty} a_{N_{k}} = A$ No we want to aim to show that this is the limit. Now we fix $\varepsilon > 0$ and select an $N$ such that $n,m > N,|a_n - a_m| < \varepsilon$. As the subsequence converges we know that there is a $K$ such that for $k>K,|A - a_{n_k}| < \varepsilon|$ Taking $M = \max(N,n_K)$
+\end{proof}
+\end{document}

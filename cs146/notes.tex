@@ -14,6 +14,8 @@
 \section{Lecture 1 - Basic Notation}
 \newtheorem{example}{Example}
 \newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+
 \subsection{Sums}
 \subsubsection{Basic Sums}
 Sigma notation makes use of the symbol $\displaystyle \sum$
@@ -201,4 +203,213 @@ When this happens we have 3 solutions of what to do
     \item You can take advantage of the fact complex roots come in conjugate pairs and solve \[\alpha(\lambda_1^n + \lambda_2^n) + \beta(\lambda_1^n - \lambda_2^n)\] This has a closely related trigonometric form given as follows \[r^n(\alpha\cos n\theta + \beta \sin n \theta\]
     Where $r$ is the modulus of the root and $\theta$ is the argument. This is gotten by application of de Moivre's theorem.
 \end{enumerate}
+\section{Lecture 10}
+\begin{example}
+    \[Q_n = \begin{cases}
+        4 &n=2 \\
+        Q_{n-1} + n^2 &n \ge 3
+    \end{cases}\]
+    This has $s = 1$ and $d = 2$ where these are the orderes of the relation and the degree of the nonhomogenous section (polynmials).
+
+    As such we have only one root $\lambda_1$ and expect the solution to look as follows 
+    \[Q_n = \alpha_1 \lambda_1 + \sum_{i=0}^{2}\beta_i n^{i + \mu}\]
+    From simple calculuation we know that $\lambda_1 = 1$ and this gives us also the $\mu = 1$ so 
+    \[Q_n = \alpha + \beta_0n + \beta_1n^2 + \beta_2n^3\]
+\end{example}
+Consider the tower of hanoi where $h$ is the number of discs.If $h = 1$ it will take one moves. If $h \ge 2$ then you take $2H_{h-1} + 1$ moves where $H_h$ is the moves needed for $h$ discs. This allows us to generate a reccurence relation as follows
+\[H_h = \begin{cases}
+    1 & h = 1 \\
+    2H_{h-1} + 1 & h \ge 2
+\end{cases}\] 
+Giving motivation to why non-homogenous reccurence relations are wanted to be solved.
+
+When solving these non homegenous relations you may find you have not enough base cases in order to be able to solve for all of the coefficients. In the case that this has happened you use the reccurence relation in order to generate more definite cases.
+
+We may want to consider informally why there is a polynomial term added on.
+Consider the relation
+\[B_n = \begin{cases}
+    B_0 & n=1 \\
+    B_{n-1} + p(n)
+\end{cases}\]
+We may consider a relation $B'_n$ which is the homogenous part of $B_n$. As the only difference between the two is continually adding $n$ we may say
+\[B_n = B'_n + \sum_{k = 3}^{n}p(k)\]
+As a sum of polynmials is itself a polynomial of we may observe that we would expect the solution to be the homogenous solution plus a non homgenous part.
+\begin{example}
+    \[B_n = \begin{cases}
+    1 & n=1,2 \\
+    5B_{n-1} - 6B_{n-2} + n
+\end{cases}\]
+Another considered tranformation is $B'_n = B_n + \alpha + \beta n$. Which represents a tranformation of the final solution removing the non homogenous parts of the solution. Suppose $n \ge 3$
+\begin{align*}
+    B'_n &= 5B_{n-1} - 6B_{n-2} + n + \alpha + \beta n \\
+    &= 5(B'_{n-1} - \alpha - \beta(n-1)) - 6(B'_{n-2} - \alpha - \beta(n-2)) + n + \alpha + \beta \\
+    &= 5B'_{n-1} - 6B'_{n-2} + 2\alpha - 7\beta + n(2 + \beta + n)
+\end{align*}
+Solving $\alpha,\beta$ to make the sequence homogenous corresponds to the solutons you would have gotten for solving the relation by the method given before
+\end{example}
+\section{Lecture 11}
+Continuiong from the lat lecture for a non-homogenous relation $A_n$ with a polynomial non homgenous part of order $n$ we may consider the complementary relations $A'_n = A_n + g(n)$. Here $g(n)$ is some polynomial of deg at least $n$ so that it makes the reccurence for $A'_n$ homogenous. Once you have solved for the polynomial you then solve the homogenous part of the relation and use the tranform to get the solution to the non homogenous equation.
+Consider the relation
+\[Q_n = \begin{cases}
+    4 &n = 2 \\
+    Q_{n-1} + n^2 & n \ge 3 
+\end{cases}\]
+You may consider the transform $Q'_n = Q_n + \alpha + \beta n + \gamma n^2$ as for the linear case a linear transform worked so you may assume the same would carry forward.
+\begin{align*}
+    B'_n &= Q_{n-1} + n^2 + \alpha + \beta n + \gamma n^2 \\
+    &=  Q'_{n-1} - \alpha - \beta (n-1) - \gamma (n-1)^2 + n^2 + \alpha + \beta n + \gamma n^2\\
+    &= Q'_{n-1} + \beta + \gamma(2n - 1) + n^2 \\ 
+\end{align*}
+This is now impossible to make homogenous as we cannot eliminate the $n^2$ term.
+By thinking back to the method for solving we can recall due to the root of 1 being present in the homogenous part the polynomial paert of the solution was shifted up by a factor of n such that the soltuion was a cubic. This is why $g$ is at least the degree of the polynomial part of the relation. For the above example above the appropriate transform would be $Q'_n = Q_n + \alpha + \beta n + \gamma n^2 + \delta n^3$. In order to fomrally prove such notion we need to look at some more maths.
+\subsection{Falling Power}
+\begin{definition}
+    Let the order $m$ falling power be given by
+    \[x^{\underline{m}} = x \cdot (x - 1) \cdot \dots \cdot (x - m + 1) = \prod_{k = 1}^{m}(x - k + 1) = \frac{x!}{(x-m)!}\]
+    Note $x^{\underline{0}} = 1$
+\end{definition}
+\begin{theorem}
+    Suppose $p(x)$ is a polynomial of degree $n$. There are unioque numbers $a_0,\dots,a_d$ such that
+    \[p(x) = \sum_{k = 0}^{d} a_k x^{\underline{k}}\] 
+\end{theorem}
+\begin{proof}
+    We will take induction on n and appreciate that
+    \[p(x) = \sum_{k = 0}^{d} \beta_k x^k\]
+    Base Case: $d = 0$
+
+    \[p(x) = \beta_0 = \beta_0 x^0 = \beta_0 x^{\underline{0}}\]
+    So true
+    
+    Inductive Step : Suppose $d > 0$ and for any polynomial of degree $f \le d - 1$ that the aim is true.
+    \[p(x) = \sum_{k = 0}^{d} a_k x^{\underline{k}}\].
+    Let $\alpha_d = \beta_d$ and let $q(x) = p(x) - \alpha_d x^{\underline{d}}$ which is a degree of order at most $d-1$ as the terms of order $d$ cancel out as their coefficients are the same but negative. By the hypothesis $q(x)$ can be shown as falling powers up do $d-1$. And as $q(x) +  \alpha_d x^{\underline{d}} = p(x)$
+    \begin{align*}
+        p(x) &= q(x) +  \alpha_d x^{\underline{d}} \\
+        &= \sum_{k = 0}^{d-1} a_k x^{\underline{k}} + \alpha_d x^{\underline{d}}\\
+        &= \sum_{k = 0}^{d} a_k x^{\underline{k}}
+    \end{align*}
+\end{proof}
+\section{Lecture 12}
+\subsection{difference operator $\Delta$}
+This operation is somewhat the discrete analogue of the derivative
+\begin{definition}
+    LEt $f : \mathbb{N} \to \mathbb{R}$ we may define fhte difference ($\Delta$) as follows
+    \[(\Delta f)(n) = f(n + 1) - f(n)\]
+\end{definition}
+\begin{example}
+    Consider a function $f:\mathbb{N} \to \mathbb{R}$ such that $f(x) = x^3$. 
+    \begin{align*}
+        (\Delta f)(n) &= (n + 1)^3 - n^3 \\
+        &= 3n^2 + 3n + 1
+    \end{align*}
+\end{example}
+The difference operator also satsifies linearity allowing it to distrobute over the sum of functions.
+\begin{proposition}
+    For any function $f : \mathbb{N} \to \mathbb{R}$
+    \[f(n) = f(1) + \sum_{k = 1}^{n - 1}(\Delta f)(k)\]
+\end{proposition}
+This can be considered the discrete analogue of the fundamental theorem of calculus.  this version of the proposition assumes that $0 \not \in \mathbb{N}$. If you do include zero swap 1 for 0
+\begin{proof}
+    \begin{align*}
+        f(1) + \sum_{k = 1}^{n - 1}(\Delta f)(k) &= f(1) + \sum_{k = 1}^{n - 1}f(k + 1) - f(k) \\
+        &= f(1) + \sum_{k = 1}^{n-1}f(k+1) - \sum_{k = 1}^{n - 1}f(k) \\
+        &= f(1) + \sum_{k = 2}^{n}f(k) - \sum_{k=1}^{n-1}f(k) \\
+        &= f(1) + f(n) - f(1) \\
+        &= f(n) 
+    \end{align*}
+\end{proof}
+The trick used in order to casncel down the sum is known as telescopic.
+\begin{proposition}
+    Product rule : Let there be a function $f : \mathbb{N} \to \mathbb{R}$
+    \[(\Delta f \cdot g)(x) = (\Delta f)(x)g(x + 1) + f(x)(\Delta g)(x)\]
+\end{proposition}
+\begin{proof}
+    \begin{align*}
+        & (\Delta f)(x)g(x + 1) + f(x)(\Delta g)(x)\\ 
+        &= (f(x+1) - f(x))g(x + 1) + f(x)(g(x + 1) - g(x)) \\
+        &= f(x+1)g(x+1) - f(x)g(x + 1) + f(x)g(x + 1) - f(x)g(x) \\
+        &= f(x+1)g(x+1) - f(x)g(x) \\
+        &= (\Delta f \cdot g)(x)
+    \end{align*}
+\end{proof}
+\subsection{Combining the two}
+\begin{proposition}
+    Falling Power rule : $(\Delta)x^{\underline{m}} = mx^{\underline{m - 1}}$. Where $m \ge 1$
+\end{proposition}
+\begin{proof}
+    We will do this proof by induction on $m$. With $m \ge 1$
+    \begin{itemize}
+        \item Base case $m=1$
+        \[\Delta x^{\underline{1}} = (x + 1) - x = 1 = 1x^{\underline{0}}\]
+        \item Inductive Step. Assume it holds for some $m \ge 1$. We now aim to show it for $m + 1$
+        \begin{align*}
+            \Delta x^{\underline{m + 1}} &= \Delta (x^{\underline{1}} \cdot (x - 1)^{\underline{m}}) \\
+            &= (x + 1 - x)(x - 1 + 1)^{\underline{m}} + x \cdot (\delta (x - 1)^{\underline{m}}) \\
+            &= (x )^{\underline{m}} + x \cdot m(x - 1)^{\underline{m - 1}} \\
+            &= (x )^{\underline{m}} + m(x )^{\underline{m}} \\
+            &=  (m + 1)(x )^{\underline{m}}
+        \end{align*}  
+    \end{itemize}
+\end{proof}
+\section{Lecture 15}
+Suppose we have a set $A$ such that $|A| = n \in \mathbb{N}$ how many subsets are there of size $k$. This is given by the binomial coefficients as $\binom{n}{k}$
+\begin{proposition}
+    Suppose $A$ is a set such that $|A| = n \in \mathbb{N}$ the numer of ways this can be ordered is $n!$.
+\end{proposition}
+\begin{proof}
+    There are $n$ position we are able to place in the elements.
+    \begin{itemize}
+        \item For the first position we have $n$ options 
+        \item For the second position we have $n - 1$ options
+        \item $\cdots$
+        \item For the $(i + 1)$th position we have $n - i$ options
+        \item $\cdots$ 
+        \item For the $n$th position we have 1 choice
+    \end{itemize}
+    By the product rule for combinatorics (also known as the fundamental principle of counting) we may take the product of all of these will give us the total number of orderings which is 
+    \[n \times (n - 1) \times \cdot \times 2 \times 1 = n!\]
+\end{proof}
+We can firther generalise this proposition
+\begin{proposition}
+    Suppose $A$ is a set such that $|A| = n \in \mathbb{N}$ the number of ordering of length $k$ $\frac{n!}{(n - k)!}$.
+\end{proposition}
+\begin{proof}
+    There are $k$ position we are able to place in the elements.
+    \begin{itemize}
+        \item For the first position we have $n$ options 
+        \item For the second position we have $n - 1$ options
+        \item $\cdots$
+        \item For the $(i + 1)$th position we have $n - i$ options
+        \item $\cdots$ 
+        \item For the $k$th position we have $(n - (k - 1))$ choices
+    \end{itemize}
+    By the product rule for combinatorics (also known as the fundamental principle of counting) we may take the product of all of these will give us the total number of orderings which is 
+    \[n \times (n - 1) \times \cdot \times (n - k + 1)= \frac{n!}{(n - k)!}\]
+\end{proof}
+Now we return to the first claim and aim to prove this
+\begin{proposition}
+    The number of $k$-element subsets of a set $a$ such that $|A| = n  \in \mathbb{N}$ 
+    \[\binom{n}{k} = \frac{n!}{(n - k)!}\]
+\end{proposition}
+\begin{proof}
+    Suppose $|A| = n \in \mathbb{N}$. We can call $N_k$ the number of $k$ element subsets of $A$.
+
+    We can make the observation for each $k$ elements subset $B \subseteq A$ the number of orderings of $B$ is $k!$. From here we can define a set $\Gamma$ such that for all $B$  $\Gamma$ contains all of the orderings of $B$.
+    Therefore we can say $|\Gamma| = k!N_k$
+    $\Gamma$ is also the set of orderings of elements of $k$ elements so we can also say $\Gamma = \frac{n!}{(n - k)!}$
+    And as such we can conclude
+    \begin{align*}
+        k!N_k &= \frac{n!}{(n - k)!} \\
+        N_k &= \frac{n!}{k!(n - k)!} = \binom{n}{k}
+    \end{align*}
+\end{proof}
+\begin{proposition}
+    for all $x,y \in \mathbb{R}$ and $n \ge 0$
+    \[(x + y)^n = \sum_{0}^{n}\binom{n}{k}x^ny^{n - k}\]
+\end{proposition}
+\begin{proof}
+    We may expand the bonomial as 
+    \[\underbrace{(x+ y)(x+y)\cdots(x+y)}_{n \text{ times}}\]
+    Each monomial is made up by choosing one of $x,y$ from each parenthesis. For a specifc monomial $x^ny^{n - k}$ The coefficient is the number of ways we can choose $x$ from the $n$ parenthesesis. This value is $\binom{n}{k}$ which becomes the coefficient of each monomial.
+\end{proof}
 \end{document}

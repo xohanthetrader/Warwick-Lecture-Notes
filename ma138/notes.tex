@@ -306,4 +306,281 @@ The associated graphical realtionship is as follows
 \begin{definition}
     Given a function $f : X \to Y$ we say show the inmage of $f$ as 
 \end{definition}
+\section{Lecture 10 - Modular Arithmetic}
+\begin{definition}
+    LEt $E_n$ be the equivalence relation on $\mathbb{Z}$ fegiven by
+    \[xE_ny \iff y = x + kn\]
+    \[[a]_n = \{x \in \mathbb{Z}| aE_nx\}\]
+    Is the congruence class of $a$ module $n$
+    \[\frac{\mathbb{Z}}{n\mathbb{Z}} = \{[a]_n| a \in \mathbb{Z}\}\]
+\end{definition}
+Given a congruence class $[b]_n$ we say $b$ is a representative instance for $[b]_n$
+\begin{theorem}
+    There is a bijection $q_n : [[n]] \to \frac{\mathbb{Z}}{n\mathbb{Z}}$ that takes a natural number to an equivalence class. To do the inverse case we must choose a representative for the class.
+    \[q_n(k) = [k]_n\]
+\end{theorem}
+\begin{definition}
+    Recall $[b]_n = [b + kn]_n, k \in \mathbb{Z}$.
+    
+    If $[x]_n = [y]_n$ we write 
+    \[x \equiv y \mod n\]
+
+    and say $x$ is congruent to $y$ modulo $n$
+\end{definition}
+\begin{definition}
+    We define the following operations
+    \begin{itemize}
+        \item Addition : $[a]_n + [b]_n := [a + b]_n$
+        \item Multiplication : $[a]_n \times [b]_n := [a \times n]_n$
+        \item Negation : $-[a]_n := [-a]_n$ 
+    \end{itemize}
+    We also define two special elements 
+    \begin{itemize}
+        \item $[0]_n$ is the zero element so $[0]_n + a = a$ and $[0]_n \times b = [0]_n$
+        \item $[1]_n$ is the unit(identity??) element so $[1]_n \times b = b$
+    \end{itemize}
+\end{definition}
+With these definitions we want to have that if $a \equiv c \mod n$ and $b \equiv d \mod n$ then $[a+b]_n = [c + d]_n$. This is the same as saying we want addition to be a function $+ : \frac{\mathbb{Z}}{n\mathbb{Z}} \times \frac{\mathbb{Z}}{n\mathbb{Z}} \to \frac{\mathbb{Z}}{n\mathbb{Z}}$. So we are essentially looking for a well definedness.
+\begin{proof}
+    The fact $[a]_n = [c]_n$ means that $c = a + kn$. Like wise for $b,d$ we can say $d = b + jn$. 
+    \begin{align*}
+        [c + d]_n &= [a + kn + b+jn] \\
+        &= [a + b + (k + j)n] \\
+        &= [a + b]_n
+    \end{align*}
+\end{proof}
+We may carry out similar proofs for multiplication and negation
+\begin{proof}
+    The fact $[a]_n = [c]_n$ means that $c = a + kn$. Like wise for $b,d$ we can say $d = b + jn$.
+    \begin{align*}
+        [c \times d]_n &= [(a + kn)(b + jn)]_n \\
+        &= [a \times b + akn + bkn + jkn^2]_n \\
+        &= [a \times n + (ak + bk + jkn)n]_n \\
+        &= [a \times b]_n 
+    \end{align*}
+\end{proof}
+\begin{proof}
+    The fact $[a]_n = [c]_n$ means that $c = a + kn$.
+    \[-[a]_n = [-1]_n \times [a]_n\]
+    By the fact multiplication is well defined negation is well defined
+\end{proof}
+By the fact that all of these definitions are in terms of simple aritmetic theorems regarding these arithmetic operations still hold under modular arithmatic so we get to keep commutivity associativy distributivity which is very fun :3.
+\begin{example}
+    Say you where told to find the last didgit of $3^{1000}$. This is athe same as finding an $x \in [[10]]$ such that $x \equiv 3^{1000} \mod 10$
+    \[3^{1000} = 9^{500} \equiv (-1)^{500} = 1 \mod 10\]
+\end{example}
+\section{Lecture 11 - Boolean Operators}
+\begin{definition}
+    A Boolean is an element of the set $\{T,F\}$
+\end{definition}
+Consider the statement "2 is a prime number". This statement has an boolean value in this case that value is $T$. Another statement is "2 is an odd number" this aslo has a boolean value which in this case is $T$. Both of these statements are propositions.
+\begin{definition}
+    A proposition is a statement that evaluates to a boolean
+\end{definition}
+\begin{definition}
+    A boolean operator $\sigma$ of arity $n$ (an $n$-ary function) is a function $\sigma : \{T,F\}^n \to \{T,F\}$
+\end{definition}
+\begin{definition}
+    Negation : $\neg : \{T,F\} \to \{T,F\}$. This has arity 1
+    \begin{displaymath}
+        \begin{array}{|c|c|}
+            \hline
+            p & \neg p \\
+            \hline
+            T & F \\
+            F & T \\
+            \hline
+        \end{array} 
+    \end{displaymath}
+\end{definition}
+\begin{definition}
+    Or : $\vee : \{T,F\}^2 \to \{T,F\}$ is a 2-ary operator defined as follows
+    \begin{displaymath}
+        \begin{array}{|c c|c|}
+            \hline
+            p & q & p \vee q \\
+            \hline
+            T & T & T \\
+            T & F & T \\
+            F & T & T \\
+            F & F & F \\
+            \hline
+        \end{array}
+    \end{displaymath}
+\end{definition}
+\begin{definition}
+    And : $\wedge : \{T,F\}^2 \to \{T,F\}$ is a 2-ary operator defined as follows
+    \begin{displaymath}
+        \begin{array}{|c c|c|}
+            \hline
+            p & q & p \wedge q \\
+            \hline
+            T & T & T \\
+            T & F & F \\
+            F & T & F \\
+            F & F & F \\
+            \hline
+        \end{array}
+    \end{displaymath}
+\end{definition}
+\begin{definition}
+    Implies : $\Rightarrow : \{T,F\}^2 \to \{T,F\}$ is a 2-ary operator defined as follows
+    \begin{displaymath}
+        \begin{array}{|c c|c|}
+            \hline
+            p & q & p \Rightarrow q \\
+            \hline
+            T & T & T \\
+            T & F & F \\
+            F & T & T \\
+            F & F & T \\
+            \hline
+        \end{array}
+    \end{displaymath}
+\end{definition}
+\begin{definition}
+    Is equivalent to (iff) : $\Leftrightarrow \{T,F\}^2 \to \{T,F\}$ is a 2-ary operator defined as follows
+    \begin{displaymath}
+        \begin{array}{|c c|c|}
+            \hline
+            p & q & p \Leftrightarrow q \\
+            \hline
+            T & T & T \\
+            T & F & F \\
+            F & T & F \\
+            F & F & T \\
+            \hline
+        \end{array}
+    \end{displaymath}
+\end{definition}
+\begin{definition}
+    We say two $n$-ary boolean operators are equal if they are equal as funtions.
+    \begin{example}
+        The expression $\neg ((\neg P) \vee (\neg Q)) = P \wedge Q$
+    \end{example}
+\end{definition}
+\begin{theorem}
+    Any boolean operator is a composition of those operators given above (not even all five is needed as some can be expressed as other. all operators can be made with (nand)/(or with negation))
+\end{theorem}
+\section{Lecture 12}
+The operations given last time (and, or) satosfy identities similarly to intersections and unions.
+
+For the or we have
+\begin{itemize}
+    \item $P \vee T = T$
+    \item $P \wedge F = P$ 
+\end{itemize}
+It is also commutative and associative. We also know that $P \vee P = P$
+
+For and we know 
+\begin{itemize}
+    \item $P \wedge T = P$
+    \item $P \wedge F = F $
+\end{itemize}
+They are also commutative and associative and $P \wedge P = P$
+
+These also distrobute over each other
+\begin{itemize}
+    \item $P \vee (Q \wedge R) = (P \vee Q) \wedge (P \vee Q)$
+    \item $P \wedge (Q \vee R) = (P \wedge Q) \vee (P \wedge Q)$
+\end{itemize}
+
+They also realte bye demorgans law
+\textbf{PUT DM LAW}
+
+\begin{definition}
+    A boolean operator $f : \{T,F\}^n \to \{T,F\}$ is a tautology if $f(x) = T$ for all $x \in \{T,F\}^n$
+\end{definition}
+\begin{definition}
+    A boolean operator $f : \{T,F\}^n \to \{T,F\}$ if $f(x) = F$ is an antimony for all $x \in \{T,F\}^n$
+\end{definition}
+\begin{example}
+    The statement $P \vee \neg P$ is a tautology
+\end{example}
+\begin{definition}
+    The lookup table for a boolean operations $f:\{T,F\}^n \to \{T,F\}$ is a two columned table. The first column is $x \in \{T,F\}^n$ and the second is $f(x)$
+\end{definition}
+For large and complex tables this can be hard to do (well not hard but very fucking long)
+\begin{example}
+    \[(P \wedge (Q \vee R)) \Rightarrow R\]
+    \begin{displaymath}
+        \begin{array}{|c c c | c|}
+            \hline
+            P & Q & R & f \\
+            \hline
+            F & F & F & T \\
+            F & F & T & T \\
+            F & T & F & T \\
+            F & T & T & T \\
+            T & F & F & T \\
+            T & F & T & T \\
+            T & T & F & F \\
+            T & T & T & T \\
+            \hline
+        \end{array}
+    \end{displaymath}
+\end{example}
+\begin{theorem}
+    If $f,g$ are of the same aritty then $f = g$ if and only if $f \Leftrightarrow g$
+\end{theorem}
+The following are useful tautologies
+\begin{itemize}
+    \item DNE : $\neg \neg P \Leftrightarrow P$
+    \item Contraposition : $(Q \Rightarrow P) \Leftrightarrow (\neg P \Rightarrow \neg Q)$
+    \item Bidirectionality : $(P\Leftrightarrow Q) \Leftrightarrow ((P \Rightarrow Q) \vee (Q \Rightarrow P))$
+    \item LEM : $(P \vee \neg P)$
+    \item Modus Ponens : $(P \wedge (P \Rightarrow R)) \Rightarrow R$
+    \item Chaining : $((P \Rightarrow Q) \wedge (Q \Rightarrow R)) \Rightarrow (P \Rightarrow R)$
+    \item Contradiction : $((\neg P) \Rightarrow F) \Rightarrow P$
+\end{itemize}
+\section{Lecture 14}
+\begin{theorem}
+    Suppose $X \ne \emptyset$
+    \[\forall x \forall y P(x,y) \Leftrightarrow \forall y \forall x P(x,y)\]
+    We can also firther show the one way chain of implications
+    \begin{align*}
+        \forall x \forall y P(x,y) &\Rightarrow \exists x \forall y P(x,y) \\
+        &\Rightarrow \forall y \exists x P(x,y) \\
+        &\Rightarrow \exists x \exists y P(x,y)
+    \end{align*}
+    And further
+    \[\exists x \exists y P(x,y) \Leftrightarrow \exists y \exists x P(x,y)\] 
+\end{theorem}
+\begin{theorem}
+    Suppose $X = \emptyset$
+    \[\forall x P(x) \Leftrightarrow T\]
+    \[\exists x P(x) \Leftrightarrow F\]
+\end{theorem}
+\begin{definition}
+    Let $A$ be a set of axioms. Let $D$ be a set of deduction rules. A proof of $S$ from $A$ is a sequence of statements $(S_k)_{k = 0}^{n}$ such that $S_k$ is either an axiom or $S_k$ can be deduced from $(S_i)_{i < k}$ using elements of $D$.
+\end{definition}
+\begin{example}
+    \[A = \{(\exists X, |X| = 0),(\exists X , |X| = n \Rightarrow \exists Y ,|Y| = 2^n )\}\]
+    \[D = \{(P \wedge (P \Rightarrow Q)) \Rightarrow Q\}\]
+\end{example}
+\begin{theorem}
+    \[\exists x, |x| = 2\]
+\end{theorem}
+\begin{proof}
+    \begin{align*}
+        S_0 &: (\exists X, |X| = 0) \\
+        S_1 &: (\exists X , |X| = 0 \Rightarrow \exists Y ,|Y| = 1 ) \\
+        S_2 &: \exists Y, |Y| = 1 \text{  by $D$}\\
+        S_3 &: (\exists Y , |Y| = 1 \Rightarrow \exists Z ,|Z| = 2) \\
+        S_4 &: \exists Z, |Z| = 2 \text{  by $D$}
+    \end{align*}
+\end{proof}
+PRoving tings like this is unweildy so we generally use the following definition 
+\begin{definition}
+    Proof (Informal) : A convincing argument of a statement.
+\end{definition}
+\begin{theorem}
+    There are arbitrariliy large rpimes
+    \[\forall n \in \mathbb{N} \exists p \in \mathbb{N},(p > n) \wedge (prime(p))\]
+\end{theorem}
+The normal proof for this is done and it is done by contradiction. Proofs done be contradiction is done by $(\neg P \Rightarrow F) \Rightarrow P$ Which under the assumption of LEM is a tautology.
+One part of the proof entails the fact a;; primes $p \le n$ where from there you construct a set of such primes. This relies on the axiom of specification and when doing formal proof you would need to quote this and do it poperly but for general convinicing arguments you wont need to state it.
+\begin{theorem}
+    Show there exists infinitley many primes $p$ such that $p \equiv 3 \mod 4$
+\end{theorem} 
 \end{document}
