@@ -412,4 +412,42 @@ Now we return to the first claim and aim to prove this
     \[\underbrace{(x+ y)(x+y)\cdots(x+y)}_{n \text{ times}}\]
     Each monomial is made up by choosing one of $x,y$ from each parenthesis. For a specifc monomial $x^ny^{n - k}$ The coefficient is the number of ways we can choose $x$ from the $n$ parenthesesis. This value is $\binom{n}{k}$ which becomes the coefficient of each monomial.
 \end{proof}
+\section{Lecture 16}
+We have already shown the following theorem for 2 sets
+\begin{theorem}
+    For any two finite sets 
+    \[|A \cup B| = |A| + |B| - |A \cap B|\]
+\end{theorem}
+This can be generalised to
+\begin{theorem}
+    For a sequence of finite sets $(A_n)$ of length greater than 2 we may say
+    \[\left|\bigcup_{k = 1}^{n}A_k\right| = \sum_{I \subseteq \{1,\dots,n\},I \ne \emptyset}(-1^{|I| + 1})\left|\bigcap_{S \in I}A_S\right|\]
+\end{theorem}
+\begin{proof}
+    We may make attempt to prove this by induciton on $n$.
+    \begin{itemize}
+        \item Base case $n = 2$
+        \[|A_1 \cup A_2| = |A_1| + |A_2| - |A_1 \cap A_2|\]
+        Which we already know to be true so the base case holds
+        \item Inductive Step: We may assume the statement holds for some $n\ge 2$. We aim t o show that it is true for $n+1$
+        
+        \begin{align*}
+            \left|\bigcup_{k = 1}^n A_k\right| &= \left|A_{n + 1} \cup \bigcup_{k = 1}^n A_k\right| \\
+            &= |A_{n+1}| + \left|\bigcup_{k = 1}^n A_k\right| - \left|A_{n + 1} \cap \bigcup_{k = 1}^n A_k \right| \\
+            &= |A_{n+1}| + \left|\bigcup_{k = 1}^n A_k\right| - \left|\bigcup_{k = 1}^n A_k \cap A_{n + 1}\right|  \\
+            &= |A_{n+1}| + \sum_{I \subseteq \{1,\dots,n\},I \ne \emptyset}(-1^{|I| + 1})\left|\bigcap_{S \in I}A_S\right|\\
+            & - \sum_{I \subseteq \{1,\dots,n\},I \ne \emptyset}(-1^{|I| + 1})\left|\bigcap_{S \in (I \cup \{n + 1\})}A_S\right|
+        \end{align*}
+        The expression is already getting quite long and evil. We will now make a series of dummy variables and sunbin order to make this expressions easier to simplify. Consider the part of the expression 
+        \[\sum_{I \subseteq \{1,\dots,n\},I \ne \emptyset}(-1^{|I| + 1})\left|\bigcap_{S \in (I \cup \{n + 1\})}A_S\right|\]
+        We may introduce a variable $J$ such that $J = I \cup \{n + 1\}$ allowing us to reqrite as follows
+        \[\sum_{I \subseteq \{1,\dots,n\},I \ne \emptyset,J = I \cup \{n + 1\}}(-1^{|J|})\left|\bigcap_{S \in J}A_S\right|\]
+        Then we can try to reintroduce the plus in the power.
+        \[-\sum_{I \subseteq \{1,\dots,n\},I \ne \emptyset,J = I \cup \{n + 1\}}(-1^{|J| + 1})\left|\bigcap_{S \in J}A_S\right|\]
+        This leaves our expression as follows
+        \[\sum_{I \subseteq \{1,\dots,n\},I \ne \emptyset}(-1^{|I| + 1})\left|\bigcap_{S \in I}A_S\right| + \sum_{I \subseteq \{1,\dots,n\},I \ne \emptyset,J = I \cup \{n + 1\}}(-1^{|J| + 1})\left|\bigcap_{S \in J}A_S\right|\]
+        And we want to consider how to comine these two expression. If we consider subsets of $\{1,\dots,n+1\}$ we can not the fitrst sum is all subsets such that $n + 1$ is in it and the second contains all that dont so we may comine them as follows and adding on the first term to ensure we get the singluar $A_{n + 1}$ term we get the following
+        \[\sum_{I \subseteq \{1,\dots,n+1\},I \ne \emptyset}(-1^{|I| + 1})\left|\bigcap_{S \in I}A_S\right|\]
+    \end{itemize} 
+\end{proof}
 \end{document}

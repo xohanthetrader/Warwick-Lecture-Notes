@@ -583,4 +583,27 @@ One part of the proof entails the fact a;; primes $p \le n$ where from there you
 \begin{theorem}
     Show there exists infinitley many primes $p$ such that $p \equiv 3 \mod 4$
 \end{theorem} 
+\section{Lecture 16 - Contradiction + induction}
+\subsection{Contradiction}
+A prrof by contradiction of a statement $P$ invloves the assumption of $\neg P$ and making an attempt to show that it is contradictory and so by LEM $P$ must be true. Formally a contradiction is a statement of the form $(C \wedge \neg C)$
+\begin{theorem}
+        If $0 < x < 1$ then $\frac{1}{x(1 - x)} \ge 4$
+\end{theorem}
+\begin{proof}
+    Suppose for contradiction that we have $0 < x < 1$ and $\frac{1}{x(1-x)} < 4$
+
+    We may also note $0 < 1-x < 1$. So we may then say $x(1 - x) > 0$ So from the assumption we deduce that 
+    \begin{align*}
+        1 &< 4x(1-x) \\
+        1 &< 4x - 4x^2 \\
+        4x^2 - 4x + 1 &< 0\\
+        (2x + 1)^2 &< 0
+    \end{align*}
+    But we know that for all $y \in \mathbb{R}$ that $y^2 \ge 0$ so we know that $(2x + 1)^2 \ge 0$ yeilding a contradiction.
+\end{proof}
+\subsection{Induction}
+\begin{theorem}
+    Let $P(n)$ be a sequence of statements for all $n \in \mathbb{N}$. Suppose it is known that $P(0)$ holds and that $P(k) \Rightarrow P(k + 1)$ holds then we may say $\forall n \in \mathbb{N},P(n)$
+\end{theorem}
+If instead we want to start the proof from another base case i.e. $P(n)$ for all $n \in \mathbb{N},n \ge l$. Induction can still be used. Formally this would be proving a proposition $C(n) := P(n + l)$  
 \end{document}
