@@ -304,8 +304,85 @@ The associated graphical realtionship is as follows
 \section{Lecture 7 - Relations}
 \subsection{Functions on Functions}
 \begin{definition}
-    Given a function $f : X \to Y$ we say show the inmage of $f$ as 
+    Given a function $f : X \to Y$ we say show the image of $A \subseteq X$ as
+    \[f(A) = \{f(x) \in Y | x \in A\} \subseteq Y\] 
 \end{definition}
+\begin{definition}
+    Given a function $f : X \to Y$ we may say the preimage of a set $B \subseteq Y$ as follows
+    \[f^{-1}(B) = \{x \in X | f(x) \in B\} \subseteq X\]
+\end{definition}
+\subsection{Relations - Equivalence Properties}
+\begin{definition}
+    Suppose we have a set $X$ and a relation $R \subseteq X^2$ we may make the following comments on the relation
+    \begin{itemize}
+        \item If for all $x \in X$ we know that $xRx$ we may call this relation reflexive
+        \item If for all $x,y \in X$ we have $xRy \implies yRx$ we may call this relation symmetric
+        \item If for all $x,y,z \in X$ we have $xRy \wedge yRz \implies xRz$
+    \end{itemize}
+\end{definition}
+\begin{definition}
+    If a relation $R \subseteq X^2$ is all of reflexive symmetric and transitive we may call this an equivalence relation.
+\end{definition}
+The idea of an equivalence relation is to capture the idea of what makes two things equal. If there are properties that you dont care about for an object you can create an equality relation. Though not an equvalence relation (due to there being no set of sets) we can somewhat see this idea in the definition of equality for sets where we ingore ordering and repetion for the determination of equality.
+\subsection{Partial Orders}
+\begin{definition}
+    Suppose $X$ is a set and a realtion $R \subseteq X^2$. We may call this relation antisymetric if for all $x,y \in X$, $xRy$ and $yRx$ implies that $x = y$ 
+\end{definition} 
+An example of such a relation is $\ge$
+\begin{definition}
+    Suppose we have a set $X$ and a relation $R \subseteq X^2$ that is reflexive transitive and antisymetric. We may call this realtion a partial order and we may call the pair $(X,R)$ a poset. 
+\end{definition}
+\begin{example}
+    A special poset is the boolean poset on $X$ which is the pair $(\mathcal{P}(X),\subseteq)$ 
+\end{example}
+\subsection{Total Orders}
+\begin{definition}
+    Suppose we have a set $X$ and a relation $R \subseteq X^2$ if we have that for all $x,y \in X$ that either $xRy$ or $yRx$ we may call this relation total.
+\end{definition}
+\begin{definition}
+    If a relation $R$ is total and is a partial order we may call it a total order.
+\end{definition}
+\section{Lecture 8}
+\subsection{Partitions}
+\begin{definition}
+    Suppose $X$ is a set. A set $P \subseteq \mathcal{P}(X)$ is a partition if
+    \begin{itemize}
+        \item Every element of $P$ is non-empty
+        \item $\bigcup_{p \in P}p = X$
+        \item Elements of $P$ are mutually disjoint
+    \end{itemize}
+\end{definition} 
+We can note two sepcial partitions one that partitions the set ontp singletons and one that contiains only one partition that is the entire set itself.
+\subsection{Equivalence Classes}
+\begin{definition}
+    Suppose we have a set $X$ with an equivalence relation $E \subseteq X^2$. Given an $x \in X$ we may show its equivalence class as follows
+    \[[x]_E = \{y \in X | xEy \}\]
+\end{definition}
+Similar to the two partitions given eralier we have the identity relation whos equivalence classes are singletons and the universal relation whose sole equivalence class is the whole set $X$.
+
+We may denote the set of all equvalence classes as follows
+\[X/E = \{[x]_E | x \in X\}\]
+We can also define a function $q_E : X \to X/E$ defined as $q_E(x) = [x]_E$
+\begin{proposition}
+    Given a set $X$ and an eqivalence relation $E$ we may say $X/E$ is a partition of $X$
+\end{proposition}
+\begin{proof}
+    To prove this we must go through each of the properties of partitions
+    \begin{itemize}
+        \item As we know that $x \in [x]_E$ we can see no class is enmpty
+        \item By the point above we know that all $x$ is in at least one class so the union is the original set
+        \item We will attempt to prove by contradiction that all classes are dissjoint. Suppose by contradiciotn for some some $x,y$ that there is a $z \in [x]_E \cap [y]_E$ where $[x]_E \ne [y]_E$. We can deduce that $xRz$ and $yRz$. By the properties of an equivalence relation we can deduce $xRy$. This means for all $y' \in [y]_E$ we can say $y' \in [x]_E$ and also show the same for $x$ so they are the same set leading to a contradiction.
+    \end{itemize}
+\end{proof}
+\subsection{Well definedness}
+Functions out of equicvalence classes have to be careful tnhat they operate thae same no matter what representation of a class it operates on. So if we have some $x \ne y,[x]_E = [y]_E$ we do want to have $f([x]_E) = f([y]_E)$. As susch we can introduce a property called well definedness.
+\begin{definition}
+    Consider two sets $X,Y$ an equivalence relation on $X$,$E$ and a funciton $f : X \to Y$.
+    We may call $f$ well defined if for all $x,x' \in X$ if $xEx'$ then $f(x) = f(x')$
+\end{definition}
+This definition can be used to the induce a function $f_E : X/E \to Y$.
+\section{Lecture 9}
+Omiited because tedius to write
 \section{Lecture 10 - Modular Arithmetic}
 \begin{definition}
     LEt $E_n$ be the equivalence relation on $\mathbb{Z}$ fegiven by
