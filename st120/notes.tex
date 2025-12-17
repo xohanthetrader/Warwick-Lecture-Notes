@@ -580,6 +580,9 @@ Sometimes we tranform a ditrobution by a function $g : \mathbb{R} \to \mathbb{R}
     Not this is only defined where $e^t(1-p) < 1$ so $t < \ln\frac{1}{1 - p}$
 \end{example}
 Consider for where it isnt integrable. This means that there is no expectation. Further if a random varibale does have an expectation a function of the random variable (even $x^2$) may not hadve a defined expectation.
+
+In general We may say if you have a DRV $X$ transformed by a function $g : \mathbb{R} \to \mathbb{R}$ We may say the following
+\[E[g(X)] = \sum_{x \in D_X}g(x)p_X(x)\]
 \subsection{Variance}
 Variance is used to measure the dispersion of a random variable
 \begin{definition}
@@ -599,4 +602,98 @@ From here we can note that
     Consider $X \sim Geom(p)$
     \[Var(X) = E[X^2] - E[X]^2 =\]
 \end{example}
+We may note that the follwwing identity holds
+\[Var(ax) = a^2Var(x)\]
+We also can see then that the units of the variance are not therefore the same as the expexctation but instead is the square of the unit as such we introduce the following.
+\subsection{Standard Deviation}
+\begin{definition}
+    Let $X$ be a square integrable DRV then we may say the following
+    \[\sigma(X) = \sqrt{Var(X)}\] 
+\end{definition}
+\section{Multivariate Discrete Dictrobutions}
+Sometimes you wish to investigate a combination of thwo DRVs. The combination of the to can mbe made into one in of itself
+\subsection{Probability Mass functions}
+\begin{definition}
+    Given two DRVs we can define the joint probability mass function as follows 
+    \[p_{X,Y}(x,y) = \mathbb{P}(X=x,Y=y)\]
+    Or more in the proper times
+    \[\mathbb{P}(\{\omega \in \Omega|X(\omega) = x,Y(\omega) = y\})\]
+\end{definition}
+Sometimes you wish to recover $p_X$ from a jpoint probability distrbution. This is called the marginal probability and can be computes as follows
+\[p_X(x) = \sum_{y \in D_Y}p_{X,Y}(x,y)\]
+\subsection{Expectation}
+\begin{proposition}
+    Given two DRVs $X,Y$ and a function $g : \mathbb{R}^2 \to \mathbb{R}$ we may say that 
+    \[E(g(X,Y)) = \sum_{x \in D_X} \sum_{y \in D_Y} g(x,y)p_{X,Y}(x,y)\]
+\end{proposition}
+This can be formally proven by constructing a new DRV $Z = g(X,Y)$. It is important to noe when constructing a probability measure on $Z$ we are not guaranteed that $g$ is an injection so there can be multiple pairs $X,Y$ that can give the same value of $Z$
+\subsection{Indepedance}
+\begin{definition}
+    We can say two DRVs $X,Y$ are independant if 
+    \[p_{X,Y}(x,y) = p_X(x)p_Y(y)\]
+\end{definition}
+The defintions of pairwise and mutual independance fall out similarly to before. It follows that if two DRVs are independant we can calculate the expectation of the prodict as follows
+\[E(XY) = E(X)E(Y)\]
+This iextends to the product of more than one DRV. Similarly we can get a result for variance.
+\[Var\left( \sum_{i = 1}^{n}X_i \right) = \sum_{x = 1}^{n} Var(X_i)\]
+Both of these have proofs which are omitted.
+\section{Law of Averages}
+\begin{theorem}
+    Let $(X_i)$ be a collection of pariwise independant discrete random variables all bearing the same mean and variance $\mu,\sigma$. We may say then that
+    \[\mathbb{P}\left( \mu - a \le \frac{X_1 + \cdots + X_n}{n} \le \mu + a \right) \ge 1-\frac{\sigma^2}{a^2n}\] 
+\end{theorem}
+This essentially encodes the idea that with more and more trials the outcome becomes more and more clustered around the true mean the mean of outcomes becomes.
+\section{Covariance}
+Sometimes we want to investigate the how two random variable vary together. though expansion by the definition we can note
+\[Var(X + Y) = Var(X) + Var(Y) + 2E[(X - E[X])(Y - E[Y])]\]
+From here we can gain the following definition
+\begin{definition}
+    We can define the covariance of two DRV's as follows
+    \[Cov(X,Y) = E[(X - E[X])(Y - E[Y])]\]
+\end{definition} 
+If we have that $Cov(X,Y) = 0$ then we say the two varibles are uncorrelated. All independant variables are uncorrelated
+Covariance has a few simple identities
+\[Cov(X,Y) = Cov(Y,X)\]
+\[Cov(X,X) = Var(X)\]
+Covariance comes with a number of useful algebraic properties.
+\begin{proposition}
+    Suppose $X,Y,Z$ are square integrable
+    \[Cov(aX + bY,Z) = aCov(X,Z) + bCov(Y,Z)\]
+\end{proposition}
+This propertiy naturally extends as 
+\begin{proposition}
+    \[Cov\left(\sum_{j = 0}^{n}a_jX_j,\sum_{k = 0}^{m} b_kY_k\right) = \sum_{j=0}^{n}\sum_{k = 0}^{m}a_jb_kCov(X_j,Y_k)\]
+\end{proposition}
+We can also generlaise the definition of covariance from above aswell
+\begin{proposition}
+    \[Var\left( \sum_{k = 1}^{n}X_k \right) = \sum_{x = k}^{n}Var(X_k) + 2\sum_{1 \le j \le k \le n} Cov(X_j,X_k)\]
+\end{proposition}
+\section{Chebyshevs Inequality}
+\subsection{Markovs Inequality}
+\begin{theorem}
+    (Markovs Inequality). Let $X$ be a non negative integrable DRV we may say
+    \[\mathbb{P}(X \ge x) \le \frac{E[X]}{x}\]
+    For all $x > 0$ 
+\end{theorem}
+\begin{proof}
+    Fix $x > 0$ then we can define a radnom variable $Y$ as follows
+    \[Y = \begin{cases}
+        x & X \ge x \\
+        0 & \text{Otherwise}
+    \end{cases}\]
+    It is clear that $X \ge Y$ so we may also then say $E[X] \ge E[Y]$
+    We can also note that the probability mass function is given as 
+    \begin{align*}
+        p_Y(x) &= \mathbb{P}(X \ge x) \\
+        p_Y(0) &= \mathbb{P}(X < x)
+    \end{align*}
+    as such we can do the following
+    \begin{align*}
+        E[X] &\ge E[Y] \\
+        &\ge 0p_Y(0) + xp_Y(x) \\
+        &\ge xP(X \ge x)
+    \end{align*}
+    Which gives the desired inequality
+\end{proof}
+\subsection{Chebyshevs Inequality}
 \end{document}

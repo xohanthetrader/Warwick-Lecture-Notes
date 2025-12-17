@@ -1,0 +1,62 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\title{CS146}
+\author{Haria}
+\date{October 2025}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+
+\begin{document}
+\begin{proposition}
+    Given a function $F: \mathbb{N} \times X \to X$ and an $x_0 \in X$ we can construct a function $f : \mathbb{N} \to X$ satisfying the recursion
+    \begin{itemize}
+        \item $f(0) = x_0$
+        \item $f(k + 1) = F(k,f(k))$
+    \end{itemize}
+\end{proposition}
+\begin{proof}
+    We can start by constructing a familly of functions $f_n : [[n]] \to X$ where we define $[[n]] := \{0,\dots,n - 1\}$. We wan to have the fact the $f_n$ satsfies the above recursion for all $k + 1 \in [[n]]$. We can construct $f_n$ as follows. 
+    \begin{itemize}
+        \item $f_0 : [[0]] \to X$. As $[[0]] = \emptyset$ This is the empty function so we can ommit this case
+        \item $f_1 : [[1]] \to X$. We can define this as $f_1(0) = x_0$ and its relation is then given as follows $f_1 = \{(0,x_0)\}$ This is clearly a function. And satisfies the base case of the reccurence
+        \item Given we already have a function $f_n$ satisfying the reccurence we may construct $f_{n + 1}$ as follows.
+        \[f_{n+1}(x) = \begin{cases}
+            f_n(x) & x \in [[n]] \\
+            F(x-1,f_n(x-1)) & x = n
+        \end{cases}\].
+        Where its relation is geiven as follows $f_{n + 1} = f_{n} \cup \{(n,F(x-1,f_n(x-1)))\}$
+
+        We now aim to prove that this is a function and then that it does satisfy the reccurence. To prove this is a function we need for every $x \in [[n + 1]]$ There is excalt one pair $(x,f_{n+1}(x)) \in f_{n + 1}(x)$ Consider two cases for $x$
+        \begin{itemize}
+            \item Consider $x \in [[n]]$. Due to the fact $f_n$ is a function there is exactly one pair $(x,\_) \in f_n$. And as we know $x < n$ which tells us $x \ne n$ we know that then there is exaclty one pair  $(x,\_) \in f_{n} \cup \{(n,F(x-1,f_n(x-1)))\} = f_{n + 1}$
+            \item Consider $x \not \in [[n]]$. As $x$ is restricted to $[[n + 1]]$ we can say in this case that then $x = n$. This means that $x$ is outside the domain of $f_n$ so there is no pair contianing $x$ in $f_n$ so there then is exactly one pair $(x,\_) \in f_{n} \cup \{(n,F(x-1,f_n(x-1)))\} = f_{n + 1}$
+        \end{itemize}
+        As such we can say that if $f_n$ is a function then so is $f_{n + 1}$. We now need to show it agrees with the recursion. As $f_n \subset f_{n+1}$ we can say then that for all $x \in [[n]]$ that $f_n(x) = f_{n + 1}(x)$. So as we know that $f_n$ satsifes the recursion we can say that $f_{n + 1}$ does aswell where $x \in [[n]]$. If $x = n$ then we get from the the way we extended the function it also satisfies the recurrence 
+    \end{itemize}
+    \begin{lemma}
+        Given an $x \in \mathbb{N}$ for all $a,b > x$ we have that $f_{a}(x) = f_{b}(x)$ 
+    \end{lemma}
+    \begin{proof}
+        By the construction we have that $f_{x + 1} \subseteq f_{a}$ and $f_{x + 1} \subseteq f_{a}$. As all of these are functions we then get $f_{a}(x) = f_{x + 1}(x)$ and $f_{b}(x) = f_{x + 1}(x)$ so $f_{a}(x) = f_{b}(x)$  
+    \end{proof}
+    Now we must find somewhere where all these functions exist. We know that the set $\mathbb{N} \times X$ must exist as it is given as the domain of $F$. Any set $[[n]] \times X$ is a subset of $\mathbb{N} \times X$ as $[[n]] \subset \mathbb{N}$. For all $n,f_n \subset ([[n]] \times X) \subset (\mathbb{N} \times X)$. As such we can then say that $f_n \in \mathcal{P}(\mathbb{N} \times X)$ for all $n$. As such we can construct by specification a set $\hat{f} = \{x = f_n \text{ for some n }| x \in \mathcal{P}(\mathbb{N} \times X)\} = \{f_0,f_1,\dots\}$
+
+    I now propose that $f : \mathbb{N} \to X = \bigcup \hat{f}$ is a function and that it satisfies the recurion.
+    To show its a function we shall do this in two parts, show there is at least one pair $(n,\_) \in f$ and then that there is at most one pair.
+    \begin{itemize}
+        \item Suppose by contradiction that there is an $n \in \mathbb{N}$ such that there is no pair $(n,\_) \in f$. As we know there is a pair $(n,\_) \in f_{n+1}$ This would imply that $f_{n + 1} \not \subset f$ which contradicts the construction of $f$
+        \item The other way it may fail to be a function is that for a given $n$ there are two pairs $(n,x),(n,y) \in f$ where $x \ne y$. This means there are funtions such that $f_a(n) = x \ne y = f_b(n)$. This contradicts the above lemma
+    \end{itemize}
+    This concludes that we know that $f$ is a function. Next we aim to prove that it satisfies the reccurence which will; be done by induction.
+    \begin{itemize}
+        \item Base case, $n = 0$ : We have that $(0,x_0) \in f_1 \subset f$ so we can conclude $f(0) = x_0$
+        \item Indctive case, for some $n$ we have that $f(n)$ satisfies the reccurence : We have that $(n + 1,F(k,f(n))) \in f_{n+2} \subset f$ so we know that $f(n + 1) = F(k,f(n))$ Which satsifies the reccurence.
+    \end{itemize}
+    This concludes the proof of the existence of a function that satisfies the linear reccurence???
+\end{proof}
+Predicate for classifying $f_n$
+\[\Phi(X) = (0,x_0) \in X \land ((n + 1 < |X| \land (n,x) \in X) \implies (n + 1,F(n,x))\in X)\]
+\end{document}

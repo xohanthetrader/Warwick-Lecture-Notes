@@ -450,4 +450,115 @@ This can be generalised to
         \[\sum_{I \subseteq \{1,\dots,n+1\},I \ne \emptyset}(-1^{|I| + 1})\left|\bigcap_{S \in I}A_S\right|\]
     \end{itemize} 
 \end{proof}
+\section{Lecture 20}
+Preimage is denoted $f^{(-1)}(x)$ which gives a set
+We can induce relations from functions $f(s) = t \iff sRt$
+Not every relation is a function as each $r$ relates to exactly one $t$
+\begin{definition}
+    Injective: Here is an alternate way to denote injectivity. Given an $f : A \to B$ for all $b \in B,|f^{(-1)}(b)| \le 1$
+\end{definition}
+\begin{definition}
+    Surjectivity: Similarly surjectivity can be redifined as follows Given an $f : A \to B$ for all $b \in B,|f^{(-1)}(b)| \ge 1$ 
+\end{definition}
+\begin{definition}
+    Bijectivity: And from here it follows that bijectivity is Given an $f : A \to B$ for all $b \in B,|f^{(-1)}(b)| = 1$
+\end{definition}
+\section{Lecture 21}
+\begin{definition}
+    For functions from $f,g : \mathbb{N} \to \mathbb{R}^{+}$ we say that $f \in O(g)$ if there exists a $k$ such that $f(x) \le kg(x)$
+\end{definition}
+An eqiuvalent defintion may be given as 
+\begin{definition}
+    For functions from $f,g : \mathbb{N} \to \mathbb{R}^{+}$ we say that $f \in O(g)$ if there exists a $n_0,k$ such that $f(n) \le kg(n)$ for all $n \ge n_0$
+\end{definition}
+\begin{proposition}
+    Consider the limit
+    \[\lim_{n \to \infty} \frac{f(n)}{g(n)}\]
+    If this converges to a finite limit we may say that $f \in O(g)$. IF this limit diverges to infity we may say that $f \not \in O(g)$
+\end{proposition}
+\begin{proof}
+    Let us start with the proof in the case of a finite limit. Consider there limit to be a value $L \ge 0$. We can then say there is an $n_0$ such that for all $n \ge n_0$
+    \[\left|\frac{f(n)}{g(n)} - L\right| \le \varepsilon\]
+    We may now let $\varepsilon = 1$ and allow $n_0$ to be set accordingly. we may then deduce
+    \[-1 \le \frac{f(n)}{g(n)} - L \le 1\]
+    and it follows then that
+    \[f(n) \le (L + 1)g(n)\]
+    For $n \ge n_0$ which satisfies the definition.
+
+    Now lets approach the infite divergence case. In this case we can make the statement for all $L \ge 0$ there exists and $n_0$ such that for all $n \ge n_0$
+    \[\frac{f(n)}{g(n)} > L\]
+    Suppose for the sake of contradiction that we have the limit is $+\infty$ and that $f \in O(g)$. We may say then that there is a $k$ such that $f(n) \le kg(n)$ by definition.
+    We may then let $L = K$ which implies by the definition of divergence to infity that $f(n) > kg(n)$ for $n > n_0$ This means when $n_0 > n$ we have that $f(n) > kg(n)$ and $f(n) \le kg(n)$ whcih is a contradsiction. 
+\end{proof}
+\begin{proposition}
+    Suppose that some function $f : \mathbb{N} \to \mathbb{R}^+$ can be written as follows
+    \[f(n) = \sum_{i = 1}^{c}f_i(n)\]
+    Where $f_i : \mathbb{N} \to \mathbb{R}^+$ for all $i$.
+    We may say
+    \begin{enumerate}
+        \item If all $f_i \in O(g)$ then $f \in O(g)$
+        \item If there exists an $f_i \not \in O(g)$ then $f \not \in O(g)$
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    \begin{enumerate}
+        \item We may say that for all $f_i$ there is a $k_i$ such that $f_i(n) \le k_ig(n)$
+        As such we may say the following
+        \[f(n) = \sum_{i = 1}^{c}f_i(n) \le g(n)\sum_{i = 1}^{c}k_i\]
+        As the sum is a finite sum of constants it is itself a constant so we can not that $f \in O(g)$
+    \end{enumerate}
+\end{proof}
+\section{Lectuire 28}
+Some reccurence relations do not have/have very cursed closed form solutions but we still want to quantify their behaviour. As such we can use asymptotics to measure theier behaviour
+\subsection{Direct Method}
+Consider the runtime analysis of merge sort
+\[T(n) = \begin{cases}
+    1 & n = 1 \\
+    4n + T(\left\lceil n/2 \right\rceil) + T(\left\lfloor n/2 \right\rfloor ) & n > 1
+\end{cases}\]
+This can be hard to form a closed form for. 
+\begin{proposition}
+    $T(n)$ is monotone increasing (wrt $n$)
+\end{proposition}
+\begin{proof}
+    Aim : $T(n) \ge T(n+1)$
+    
+    We will attempt strong induction on $n$
+    \begin{itemize}
+        \item Base Case : $T(1) = 1,T(2) = 10$. We can note $10 > 2$ So the base of induction holds
+        \item inductive Case Assume for some $m > 1$ that the inequality holds for all $n < m$. We aim to prove it for $n = m$
+        \begin{align*}
+            T(m + 1) &= 4(m + 1) + T(\left\lfloor \frac{m+1}{2}\right\rfloor) + T(\left\lceil \frac{m+1}{2}\right\rceil ) \\
+            &> 4m + T(\left\lfloor \frac{m}{2}\right\rfloor) + T(\left\lceil \frac{m}{2}\right\rceil ) \\
+            &= T(m)
+        \end{align*}
+        So we may conclude $T(m + 1) > T(m)$
+    \end{itemize}
+\end{proof}
+Note that when we restrict $n = 2^k,k\in\mathbb{N}$ the reccurence is simpler
+\[T(2^k) = 2^{k+2} + 2T(2^{k-1})\]
+We also know for every other $n$ we have that $2^k \le n \le 2^{k+1}$ Where $k = \left\lfloor \log_2(n)\right\rfloor$
+In order to solve this we create an auxiliary reccurence satisfying $T'(k) = T'(2^k)$
+\[T'(k) = \begin{cases}
+    1 &k=0 \\
+    2^{k+2} + 2T'(k-1) & K \ge 1
+\end{cases}\]
+Suppose then $k$ is large we may show the expansion of terms looks akin to 
+\[T'(k) = cT^{n + 2} + 2^{c}T'(n - c)\]
+This is easily proven by induction. Letting $c = k$ and then substituting back we get
+\[T(n) = n(4\log_2(n) + 1)\]
+Using this form for powers of $n$ we can reavluate the upper and lower bounds
+\begin{align*}
+    T(n) &\ge T(2^{\left\lfloor \log_2(n)\right\rfloor}) \\
+    &= 2^{\left\lfloor \log_2(n)\right\rfloor} \cdot (4\left\lfloor \log_2(n)\right\rfloor + 1) \\
+    &\ge 2^{\log_2(n) - 1} \cdot (4(\log_2(n) - 1) + 1) \\
+    &= 2n\log_2(n) - \frac{3}{2}n 
+\end{align*}
+Through a similar chain of reasoning we can determine
+\[T(n) < 8n\log_2(n) + 10n\]
+So $T(n)$ can be bounded as follows
+\[2n\log_2(n) - \frac{3}{2}n \le T(n) < 8n\log_2(n) + 10n\]
+and therefore 
+\[\frac{1}{2}n\log_2(n) \le T(n) < 18n\log_2(n)\]
+As such we may conclude $T(n) \in \Theta(n\log_2(n)))$
 \end{document}

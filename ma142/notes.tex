@@ -352,6 +352,175 @@ We can use this thorem to construct a faster proof of the Cauchy Criterion (only
 
     The proof that it is bounded is the same as before.
 
-    This means that by BW there exists a limit $\lim_{k \to \infty} a_{N_{k}} = A$ No we want to aim to show that this is the limit. Now we fix $\varepsilon > 0$ and select an $N$ such that $n,m > N,|a_n - a_m| < \varepsilon$. As the subsequence converges we know that there is a $K$ such that for $k>K,|A - a_{n_k}| < \varepsilon|$ Taking $M = \max(N,n_K)$
+    This means that by BW there exists a limit $\lim_{k \to \infty} a_{N_{k}} = A$ No we want to aim to show that this is the limit. Now we fix $\varepsilon > 0$ and select an $N$ such that $n,m > N,|a_n - a_m| < \varepsilon$. As the subsequence converges we know that there is a $K$ such that for $k>K,|A - a_{n_k}| < \varepsilon|$ Taking $M = \max(N,n_K)$. As such for $n,m > N_M,|a_n - a_m| < \varepsilon$ and $j>M,|A - a_{n_j}| < \varepsilon|$. It follows that $m > N_M,|a_{n_j} - a_m|<\varepsilon$. Therefore we can say both $a_m$ and $A$ lies in a region of $\pm \varepsilon$ around $a_{n_j}$. As such we can say that for all $m > N_M,|a_m - A| < 2\varepsilon$ so it converges.
+\end{proof}
+Next we aim to prove balsano wierstrauss.
+\begin{proof}
+    Construct intervals $[a_k,b_k]$ such that $|[a_k,b_k]| = \frac{b_1 - a_1}{2^{k-1}}$. As such we can say $a_k$ is increasing and $b_k$ is decreasing and the interval is chosen such that the interval has infinitley many points. By the wierstrauss convergence thorem both $a_k,b_k$ are both converging and by the geoetric relation these are both converging to the same limit. 
+\end{proof}
+\section{Lecture 9 - Chapter 3 Start - Series}
+What does the statement 
+\[\sum_{n = 1}^{\infty}a_n\]
+mean and how do we know when it conveges.
+\begin{definition}
+    Let $(a_n)$ be a sequence. Define the partial sum $S_n = \sum_{k = 1}^{n}a_k$. If the sequence $(S_n)$ converges we can say the infinite sum exusts otherwise we say it diverges. The value of the infite sum is the same as the limit. 
+\end{definition}
+Let us check the definition of convergent gemoetric sequences against this more formal definition
+\[1 + x + x^2 + \cdots = \frac{1}{1 - x},|x| < 1\]
+\begin{proof}
+    \begin{align*}
+        S_n &= 1 + x + \cdots + x^{n - 1} \\
+        xS_n &= x + x^2 + \cdots + x^n\\
+        (1 - x)S_n &= 1 - x^n \\
+        S_n = \frac{1 - x^n}{1 - x}
+    \end{align*}
+    This holds for $x \ne 1,n \ge 1$. In order to evaluate this limit we need to evaluate cases of the power lemma.
+    \[\sum_{n = 1}^{\infty} = \begin{cases}
+        \frac{1}{1 - x} & |x| < 1\\
+        \infty & x>1\\
+        \infty & x = 1\\
+        \text{DIVERGENT} & \text{Otherwise}
+    \end{cases}\]
+\end{proof}
+Considering a partial sum $S_n = \sum_{k = 1}^{n}f(n) = F(n)$. Sometimes a trick we use to get new sequences is to diffrentiate both sides (of the sequences contain terms of $x$). We can only really do this if the new partial sum $S'_n = \sum_{k = 1}^{n}f'(n) = F'(n)$ also converges.
+
+Now we will investigate the divergence of the harmonic series
+\begin{proposition}
+    \[\sum_{n = 1}^{\infty}\frac{1}{k} \to \infty \]
+\end{proposition}
+\begin{proof}
+    By goruping terms in sections of $2^{n - 1}$. Each of these supsequent subsequences is greater than or equal to $\frac{1}{2}$. For example $\frac{1}{3} + \frac{1}{4} > \frac{1}{4} + \frac{1}{4} = \frac{1}{2}$. As such we may say 
+    \[S_{2^n} \ge + \frac{N}{2}\]
+    Which diverges.
+\end{proof}
+\section{Lecture 10}
+\begin{lemma}
+    If $\sum_{n = 1}^{\infty}a_n$ converges then $a_n \to 0$
+\end{lemma}
+By use of the contrapositive we can also say 
+\begin{theorem}
+    If $a_ \not \to 0$ then $\sum_{n = 1}^{\infty}$ diverges
+\end{theorem}
+\begin{proof}
+    We may write 
+    \[a_n = S_n - S_{n- 1} \to L - L = 0\]
+\end{proof}
+\begin{lemma}
+    Comparison lemma for series: Suppose $0 \le a_n \le b_n$
+    \begin{itemize}
+        \item If $\sum_{n = 1}^{\infty}a_n = \infty$ then $\sum_{n = 1}^{\infty}b_n = \infty$
+        \item If $\sum_{n = 1}^{\infty}b_n < \infty$ then $\sum_{n = 1}^{\infty}a_n < \infty$
+    \end{itemize}  
+\end{lemma}
+This follows trivailly from from lemmas from sequences
+
+For positive decreasing functions by observation of pictures(no formal proof is given)
+\[\int_{M}^{N + 1}f(x)dx \le \sum_{k = M}^{N}f(x) \le \int_{M - 1}^{N} f(x)dx\]
+\section{Further tests for series}
+\subsection{Ratio Test}
+\begin{theorem}
+    Ratio Test. Suppose $(a_n:n>0)$ is a sequence with $a_n > 0$ and that $\frac{a_{n+1}}{a_n} \to l$. The infinite sum converges if and only if $l \in [0,1)$ otherwise it diverges.
+\end{theorem}
+\begin{proof}
+    We wish to make a comparison to the geometric series in order to prove convergence. Suppose we hade an upper bound $\gamma$ on all the ratios $\frac{a_{n+1}}{a_n}$ foir all $n \ge N$. Then we may express terms $n \ge N$ as $a_n = a_{m + N} = \gamma^m a_N$. As such the tail of the infinite sum will be less than a geopetric series. If this upper bound $\gamma < 1$ then we will have that the geometric series converges and by comparison the tail of the infinite sum will converge so the entire sum will converge. 
+    
+    Now we must find this bound $\gamma$ as $\frac{a_{n+1}}{a_n} \to l$ we can try find an $\varepsilon > 0$ such that $l + \varepsilon < 1$. Letting $\varepsilon = \frac{1 - l}{2}$ We know there is an $N$ such that for all $n \ge N$ that $l + \varepsilon < \frac{1 + l}{2} < 1$ giving what was needed above.
+
+    A similar argument cvan be made with a lower bound for the diverging case to show its always greater than a diverging geometric sequence.
+\end{proof}
+\subsection{Absolute convergence}
+\begin{theorem}
+    If $\sum_{n = 1}^{\infty}|a_n|$ converges then so does $\sum_{n = 1}^{\infty}a_n$
+\end{theorem}
+\begin{proof}
+    Define partial sequences
+    \[T_n = \sum_{k = 1}^{n}|a_k|,S_n = \sum_{k = 1}^{n}a_k\]
+    By assumption we have that $T_n$ covnverges as such by the cauchy criterion we may say for all $\varepsilon$ there is an $N$ such that for all $m,n \ge N$ we have that $|T_m - T_n| < \varepsilon$. Without loss of generality let $m >  n$ We have that by the triangle inequality
+    \[|S_m - S_n| = \Big|\sum_{k = n+1}^{m}a_k\Big| \le \sum_{k = n+1}^{m}|a_k| = |T_m - T_n| \le \varepsilon\]  
+\end{proof}
+From here we get useful imporvement to the ratio tests
+\begin{proposition}
+    Imporved Ratio Test : Suppose $(a_n:n>0)$ is a sequence with $a_n > 0$ and that $\frac{|a_{n+1}|}{|a_n|} \to l$. The infinite sum converges if and only if $l \in [0,1)$ otherwise it diverges.
+\end{proposition}
+\subsection{Alternating Series}
+\begin{theorem}
+    Alternating series test: Suppose $(a_n : n > 0)$ is a decreasing sequence with a limit of zero. Then we have that 
+    \[S_n = \sum_{n = 1}^{\infty}(-1)^{n + 1} a_n \to L \in \mathbb{R}\] 
+\end{theorem}
+\begin{proof}
+    You may easilly show 
+    \[S_2 \le S_4 \le \cdots \le S_3 \le S_1\]
+    Thus by wietrauss's lemma we have the even supsequence has a limit $L$ and the odd subsequence has a limit $U$ but we also have That the difference between the even and odd subsequences tend to zero so $U - L = 0 \Rightarrow U = L$ As such the entire sum converges to a limnit that agrees of $L$ 
+\end{proof}
+\subsection{Rearragnment}
+\begin{theorem}
+    Reimanns Rearragnment theorem: If a series absolutley converges then all rearangments of terms converge to the same result. If however a series converges but does not converge absolutley then it may be re-arranged to reach any limit.
+\end{theorem}
+\section{Continuous Functions}
+\subsection{Continuity}
+\begin{definition}
+    Contunity - By Sequences : A function $f : I \to \mathbb{R}$ Where $I$ is an interval of the reals is continuous at a point $c$ when for every sequence $(x_n)$ such that $x_n \in I$ for all $n$ and $x_n \to c$ we have that
+    \[f(x_n) \to f(c)\]
+\end{definition}
+From this sequence definition we can induce an algebra of convergent series from the alagebra of limits
+
+If $f,g$ are continous functions on a domain $I$ then we have that
+\begin{itemize}
+    \item $f + g$ is continuous
+    \item $fg$ is continous
+    \item Provided $g \ne 0$ over the interval $I$ then $f/g$ is continuous
+\end{itemize}
+It is trivial here to show that every polynomial is continuous.
+
+An example of a non continous funciton may be given as 
+\[f(x) = \begin{cases}
+    1 & x > 0 \\
+    0 & x \le 0
+\end{cases}\]
+Which is not continuous at zero
+\begin{proof}
+    Let $x_n = \frac{1}{n}$ we have $x_n \to 0$ and we have that $f(x_n) \to 1$ but also that $f(0) = 0$ so it is non continous at 0.
+\end{proof}
+A frther case in the algebra of continuous fucntions is 
+\begin{theorem}
+    Suppose $f : I \to \mathbb{R}$ and $g : J \to I$ where $I,J$ are intervals of the reals and $g$ is continuous at $c$ and $f$ is continuous at $g(c)$ we may say that $(f \circ g)$ is continuous at $c$
+\end{theorem}
+\begin{proof}
+    Let a sequence $(x_n)$ such that $x_n \to c$. By $g$ continuity we have $g(x_n) \to g(c)$ and by $f$ continuity we have $f(g(x_n)) \to f(g(c))$
+\end{proof}
+Now we will introduce an alternative definition of continuity
+\begin{theorem}
+    Continuity - Epsilon Delta : Given a function $f : I \to \mathbb{R}$ where $I $ is a subset of the reals we may say $f$ is continuous at $c$ if for all $\varepsilon > 0$ there exists a $\delta > 0$ such that for all $x \in I$
+    \[|x - c| < \delta \Rightarrow |f(x) - f(c)| < \varepsilon\]
+\end{theorem}
+\subsection{Intermediate Value theorem}
+Let $f : [a,b] \to \mathbb{R}$ be continuous and suppose there is a $u$ between $f(a),f(b)$ then there exists a $c,a \le c \le b$ such that $f(c) = u$
+\begin{proof}
+    Assume $f(a) < u < f(b)$ and let $A$ be defined as follows
+    \[\left\{ x \in [a,b] | f(x) \le u \right\}\]
+    Let us call $s = \sup A$. We aim to show that $f(s) = u$. We do this by eleminating the other two cases of $f(s) < u$ and $f(s) > u$.
+    \begin{itemize}
+        \item Assume $f(s) < u$. Let $\varepsilon = u - f(s)$ then for some $\delta > 0$ 
+        \[|f(x) - f(s)| < \varepsilon = u - f(s)\]
+        Where $|x - s| < \delta$. Seecting $x = s + \frac{\delta}{2}$ we have that $f(x) < f(s) + \varepsilon = u$ meansing that $x>s,x \in A$ cintradicting that $s = \sup A$
+        \item Suppose $f(s) > u$ Let $\varepsilon = f(s) - u$ then for some $\delta > 0$
+        \[|f(x) - f(s)| < \varepsilon < f(s) - u\]
+        Where $|x - s| < \delta$. IT follows then that by choosing $x$ such that $s - \delta < x \le s$. This implies $f(x) > f(s) - \varepsilon = u$ meaning that $s - \delta$ is a lesser upper bound contradicting $s = \sup A$
+    \end{itemize}
+\end{proof} 
+\section{Week 10 - Lecture 1}
+\begin{theorem}
+    Suppose $f:[a,b] \to \mathbb{R}$ is continuous then 
+    \begin{itemize}
+        \item $f$ is bounded 
+        \item $f$ has a maximum and a minimum
+    \end{itemize}
+\end{theorem}
+\begin{proof}
+    \begin{itemize}
+        \item By contradiction assume $f$ is not bounded. Then there must exists values , $x_n$ such that $|f(x_n)| \ge N$ for all $N$. If this sequence $x_n \to c \in [a,b]$ then $f(x_n) \to f(c)$ which may be a bounded. By BW there is a subset of $(x_n)$ that converges to a limit and so we can still apply the previous imlication giving us our contradiction.
+        \item We aim to show that there is a $c$ such that $f(c) = \sup \{f(x) | x \in [a,b]\} = U$.
+        Choose a sequence $x_n$ where $f(x_n) \ge U - \frac{1}{n}$. Then we can choose a convergent subsequence of $(K_n)$ $x_n$. As such the limit of this subsequence $c$ (by continuity) has such that $f(c) = \lim f(K_n) = U$  
+    \end{itemize}
 \end{proof}
 \end{document}
